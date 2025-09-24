@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.IO;
 
-namespace BinarySoundOpenAL_Library
+namespace SoundScenesOpenAL_Library
 {
     public class Scene
     {

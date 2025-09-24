@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySoundOpenTKConsole", "BinarySoundOpenTKConsole\BinarySoundOpenTKConsole.csproj", "{64FE3CBC-C6BD-49A7-9355-07D81FA4B34E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundScenesOpenAL_Console", "BinarySoundOpenTKConsole\SoundScenesOpenAL_Console.csproj", "{64FE3CBC-C6BD-49A7-9355-07D81FA4B34E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySoundOpenAL_Library", "BinarySoundOpenAL_Library\BinarySoundOpenAL_Library.csproj", "{9B7FFE90-0D8D-4811-8901-4A79EDD68373}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundScenesOpenAL_Library", "BinarySoundOpenAL_Library\SoundScenesOpenAL_Library.csproj", "{9B7FFE90-0D8D-4811-8901-4A79EDD68373}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
