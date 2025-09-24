@@ -14,3 +14,4 @@ namespace BinarySoundOpenAL_Library
         public float TimeEnd { get; set; }     // czas zakończenia ruchu w punkcie
     }
 }
+ 
