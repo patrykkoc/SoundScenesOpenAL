@@ -15,4 +15,31 @@
     <Folder Include="Resources\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\dzwiekiMono\kroki-kobiety-po-hali-dworca.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\pociagzapowiedz-Siedlce.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\samochod-ruszajacy-str.lewa.WAV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\samochody-szosa-str.lewa.WAV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\samochody-szosa-z-przodu.WAV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\samochody-ul-Janowska-str-prawa.WAV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\swiatladzwiekowe-3-maja1-czerwone.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\swiatladzwiekowe-3-maja2-zmiananazielone.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

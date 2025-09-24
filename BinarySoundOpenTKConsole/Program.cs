@@ -17,22 +17,27 @@ int source1 = AL.GenSource();
 int source2 = AL.GenSource();
 
 // ================== WAV File Loading ==================
-// Load the same WAV file for both sources (you can use different files if you want)
-int channels, bitsPerSample, sampleRate;
-byte[] soundData;
-using (var fs = File.Open("sound2.wav", FileMode.Open))
+// Load two different WAV files for each source
+int channels1, bitsPerSample1, sampleRate1;
+int channels2, bitsPerSample2, sampleRate2;
+byte[] soundData1, soundData2;
+
+using (var fs1 = File.Open("Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav", FileMode.Open))
 {
-    soundData = LoadWave(fs, out channels, out bitsPerSample, out sampleRate);
+    soundData1 = LoadWave(fs1, out channels1, out bitsPerSample1, out sampleRate1);
+}
+using (var fs2 = File.Open("Resources/dzwiekiMono/pociagzapowiedz-Siedlce.wav", FileMode.Open))
+{
+    soundData2 = LoadWave(fs2, out channels2, out bitsPerSample2, out sampleRate2);
 }
 
 // Print WAV file properties at the beginning
-Console.WriteLine($"Channels: {channels}");
-Console.WriteLine($"Bits per sample: {bitsPerSample}");
-Console.WriteLine($"Sample rate: {sampleRate} Hz");
+Console.WriteLine($"Source1: Channels: {channels1}, Bits per sample: {bitsPerSample1}, Sample rate: {sampleRate1} Hz");
+Console.WriteLine($"Source2: Channels: {channels2}, Bits per sample: {bitsPerSample2}, Sample rate: {sampleRate2} Hz");
 
 // Upload the loaded WAV data to both OpenAL buffers
-AL.BufferData(buffer1, GetSoundFormat(channels, bitsPerSample), ref soundData[0], soundData.Length, sampleRate);
-AL.BufferData(buffer2, GetSoundFormat(channels, bitsPerSample), ref soundData[0], soundData.Length, sampleRate);
+AL.BufferData(buffer1, GetSoundFormat(channels1, bitsPerSample1), ref soundData1[0], soundData1.Length, sampleRate1);
+AL.BufferData(buffer2, GetSoundFormat(channels2, bitsPerSample2), ref soundData2[0], soundData2.Length, sampleRate2);
 
 // Attach the buffers to the sources for playback
 AL.Source(source1, ALSourcei.Buffer, buffer1);
@@ -48,7 +53,7 @@ AL.DistanceModel(ALDistanceModel.InverseDistanceClamped);
 
 // ================== 3D Source Settings ==================
 // Initial positions: source1 at (left, top), source2 at (right, bottom)
-float source1X = -10.0f, source1Y = 10.0f;
+float source1X = -20.0f, source1Y = 10.0f;
 float source2X = 10.0f, source2Y = -10.0f;
 AL.Source(source1, ALSource3f.Position, source1X, source1Y, 0.0f);
 AL.Source(source2, ALSource3f.Position, source2X, source2Y, 0.0f);
@@ -62,34 +67,45 @@ AL.Source(source2, ALSourcef.Pitch, 1.0f);
 // Set reference and max distance for attenuation
 AL.Source(source1, ALSourcef.ReferenceDistance, 2.0f);
 AL.Source(source2, ALSourcef.ReferenceDistance, 2.0f);
-AL.Source(source1, ALSourcef.MaxDistance, 50.0f);
-AL.Source(source2, ALSourcef.MaxDistance, 50.0f);
+//AL.Source(source1, ALSourcef.MaxDistance, 50.0f);
+//AL.Source(source2, ALSourcef.MaxDistance, 50.0f);
 AL.Source(source1, ALSourceb.Looping, true); // <-- Looping enabled for source1
 AL.Source(source2, ALSourceb.Looping, true); // <-- Looping enabled for source2
 
 // ================== Playback ==================
-// Start both cars, but delay the right one (source2) by 1 second
-Console.WriteLine("Left car (top-to-bottom) is starting...");
+// Start both cars at the same moment
+Console.WriteLine("Both cars are starting (left top-to-bottom, right bottom-to-top)...");
 AL.SourcePlay(source1);
+AL.SourcePlay(source2);
 
-for (int t = 0; t < 100; t++)
+while(true)
 {
     source1Y -= 0.15f;
+    source2Y += 0.2f;
     AL.Source(source1, ALSource3f.Position, source1X, source1Y, 0.0f);
-
-    // Start right car after 1 second (20 * 50ms = 1000ms)
-    if (t == 20)
-    {
-        Console.WriteLine("Right car (bottom-to-top) is starting...");
-        AL.SourcePlay(source2);
-    }
-    if (t >= 20)
-    {
-        source2Y += 0.2f;
-        AL.Source(source2, ALSource3f.Position, source2X, source2Y, 0.0f);
-    }
+    AL.Source(source2, ALSource3f.Position, source2X, source2Y, 0.0f);
     Thread.Sleep(50);
+
+    Console.WriteLine("source1Y " + source1Y + "source2Y" + source2Y);
+    if(source1Y < -40.0f && source2Y > 40.0f)
+        break;
 }
+
+
+while (true)
+{
+    source1Y += 0.15f;
+    source2Y -= 0.2f;
+    AL.Source(source1, ALSource3f.Position, source1X, source1Y, 0.0f);
+    AL.Source(source2, ALSource3f.Position, source2X, source2Y, 0.0f);
+    Thread.Sleep(50);
+
+    Console.WriteLine("source1Y " + source1Y + "source2Y" + source2Y);
+    if (source1Y < -40.0f && source2Y > 40.0f)
+        break;
+}
+
+
 AL.SourceStop(source1);
 AL.SourceStop(source2);
 Console.WriteLine("Both cars stopped.");
