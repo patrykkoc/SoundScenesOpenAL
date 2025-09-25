@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SoundScenesOpenAL_Library\SoundScenesOpenAL_Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Resources\dzwiekiMono\kroki-kobiety-po-hali-dworca.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -42,6 +46,7 @@
     </None>
     <None Update="Resources\openal32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	<TargetPath>openal32.dll</TargetPath>
     </None>
     <None Update="Resources\sound.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
