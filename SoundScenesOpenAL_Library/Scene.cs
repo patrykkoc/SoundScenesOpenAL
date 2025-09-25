@@ -31,6 +31,14 @@ namespace SoundScenesOpenAL_Library
             string json = File.ReadAllText(path);
             return JsonSerializer.Deserialize<Scene>(json);
         }
+
+        public void InitializeFromJson(string path)
+        {
+            var loaded = LoadFromJson(path);
+            this.Name = loaded.Name;
+            this.Listener = loaded.Listener;
+            this.Sources = loaded.Sources;
+        }
     }
 
 }

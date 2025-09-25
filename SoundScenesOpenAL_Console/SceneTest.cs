@@ -1,17 +1,21 @@
 ﻿using SoundScenesOpenAL_Library;
 using System.Numerics;
-using static System.Formats.Asn1.AsnWriter;
-
-
 
 namespace SoundScenesOpenAL_Console
 {
     public static class SceneTest
     {
+        public static void Main(string[] args)
+        {
+            CreateTestScene();
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
+        }
+
         public static Scene CreateTestScene()
         {
             var scene = new Scene { Name = "TestScene" };
-             
+            
             scene.AddSource(new Source
             {
                 Name = "CarSound",
@@ -34,7 +38,7 @@ namespace SoundScenesOpenAL_Console
             {
                 Position = new Vector3(0.0f, 0.0f, 0.0f),
                 Velocity = new Vector3(0.0f, 0.0f, 0.0f),
-               });
+            });
 
             // Save to JSON
             string path = "scene_test.json";
