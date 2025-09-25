@@ -21,15 +21,17 @@ namespace SoundScenesOpenAL_Library
         // Zapis do JSON
         public void SaveToJson(string path)
         {
-            var options = new JsonSerializerOptions { WriteIndented = true };
+            var options = new JsonSerializerOptions { WriteIndented = true , IncludeFields = true };
             File.WriteAllText(path, JsonSerializer.Serialize(this, options));
         }
 
         // Wczytywanie z JSON
         public static Scene LoadFromJson(string path)
         {
+            var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
+
             string json = File.ReadAllText(path);
-            return JsonSerializer.Deserialize<Scene>(json);
+            return JsonSerializer.Deserialize<Scene>(json, options);
         }
 
         public void InitializeFromJson(string path)

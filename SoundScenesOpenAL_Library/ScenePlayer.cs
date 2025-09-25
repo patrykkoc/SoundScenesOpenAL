@@ -1,15 +1,16 @@
 ﻿using OpenTK.Audio.OpenAL;
 using System.Numerics;
+using System.Collections.Generic;
 
 namespace SoundScenesOpenAL_Library
 {
     public class ScenePlayer
     {
-        private readonly Scene _scene;
-        private IntPtr _device;
-        private IntPtr _context;
-        private List<int> _buffers = new();
-        private List<int> _sources = new();
+        private Scene _scene;
+        private object _device;   // Użyj var lub odpowiedniego typu (np. ALDevice lub ALDevice*)
+        private object _context;  // Użyj var lub odpowiedniego typu (np. ALContext lub ALContext*)
+        private List<int> _buffers = new(); // Dodaj to pole
+        private List<int> _sources = new(); // Dodaj to pole
 
         public ScenePlayer(Scene scene)
         {
@@ -19,9 +20,12 @@ namespace SoundScenesOpenAL_Library
         public void Play()
         {
             // OpenAL init
-            _device = ALC.OpenDevice(null);
-            _context = ALC.CreateContext(_device, (int[])null);
-            ALC.MakeContextCurrent(_context);
+            var device = ALC.OpenDevice(null);
+            var context = ALC.CreateContext(device, (int[])null);
+            ALC.MakeContextCurrent(context);
+
+            _device = device;
+            _context = context;
 
             // Listener
             var l = _scene.Listener;
@@ -35,7 +39,7 @@ namespace SoundScenesOpenAL_Library
                 int source = AL.GenSource();
                 _buffers.Add(buffer);
                 _sources.Add(source);
-
+                    
                 // Load WAV
                 int channels, bits, rate;
                 byte[] data;
@@ -58,11 +62,11 @@ namespace SoundScenesOpenAL_Library
             Console.ReadLine();
 
             // Cleanup
-            foreach (var s in _sources) AL.SourceStop(s);
-            foreach (var s in _sources) AL.DeleteSource(s);
-            foreach (var b in _buffers) AL.DeleteBuffer(b);
-            ALC.DestroyContext(_context);
-            ALC.CloseDevice(_device);
+            //foreach (var s in _sources) AL.SourceStop(s);
+            //foreach (var s in _sources) AL.DeleteSource(s);
+            //foreach (var b in _buffers) AL.DeleteBuffer(b);
+            //ALC.DestroyContext(_context);
+            //ALC.CloseDevice(_device);
         }
 
         // Helper methods (skopiuj z Program.cs)
