@@ -1,6 +1,7 @@
 using SoundScenesOpenAL_Library;
 using System.Numerics;
 using System.Collections.Generic;
+using SoundScenesOpenAL_Library.Models;
 
 namespace SoundScenesOpenAL_Console
 {

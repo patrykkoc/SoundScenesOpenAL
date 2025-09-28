@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace SoundScenesOpenAL_Library
+namespace SoundScenesOpenAL_Library.Audio
 {
     // Loads only wav fiels
     public static class SoundLoader

@@ -1,7 +1,7 @@
 using System;
 using OpenTK.Audio.OpenAL;
 
-namespace SoundScenesOpenAL_Library
+namespace SoundScenesOpenAL_Library.Audio
 {
     public class SoundDevice : IDisposable
     {

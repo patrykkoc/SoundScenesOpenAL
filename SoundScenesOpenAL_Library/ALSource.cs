@@ -1,4 +1,6 @@
 using OpenTK.Audio.OpenAL;
+using SoundScenesOpenAL_Library.Audio;
+using SoundScenesOpenAL_Library.Models;
 using System.Numerics;
 
 namespace SoundScenesOpenAL_Library

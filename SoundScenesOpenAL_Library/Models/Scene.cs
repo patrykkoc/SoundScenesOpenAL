@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.IO;
 
-namespace SoundScenesOpenAL_Library
+namespace SoundScenesOpenAL_Library.Models
 {
     public class Scene
     {
@@ -37,9 +37,9 @@ namespace SoundScenesOpenAL_Library
         public void InitializeFromJson(string path)
         {
             var loaded = LoadFromJson(path);
-            this.Name = loaded.Name;
-            this.Listener = loaded.Listener;
-            this.Sources = loaded.Sources;
+            Name = loaded.Name;
+            Listener = loaded.Listener;
+            Sources = loaded.Sources;
         }
     }
 

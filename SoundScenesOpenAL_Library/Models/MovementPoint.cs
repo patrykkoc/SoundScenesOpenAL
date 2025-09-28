@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoundScenesOpenAL_Library
+namespace SoundScenesOpenAL_Library.Models
 {
     public class MovementPoint
     {
