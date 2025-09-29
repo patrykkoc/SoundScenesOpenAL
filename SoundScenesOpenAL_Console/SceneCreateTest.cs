@@ -4,7 +4,7 @@ using SoundScenesOpenAL_Library.Models;
 
 namespace SoundScenesOpenAL_Console
 {
-    public static class SceneTest
+    public static class SceneCreateTest
     {
         public static Scene CreateTestScene()
         {

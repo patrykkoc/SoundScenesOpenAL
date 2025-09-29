@@ -1,4 +1,5 @@
 using SoundScenesOpenAL_Library;
+using SoundScenesOpenAL_Library.Models;
 
 namespace SoundScenesOpenAL_Console
 {
@@ -7,7 +8,7 @@ namespace SoundScenesOpenAL_Console
         public static void Main(string[] args)
         {
             // Uruchomienie testu sceny (zapis/odczyt JSON)
-            SceneTest.CreateTestScene();
+            SceneCreateTest.CreateTestScene();
 
             // Uruchomienie testu odtwarzania sceny (generowanie i odtwarzanie)
             // ScenePlayTest.PlayTestScene();
