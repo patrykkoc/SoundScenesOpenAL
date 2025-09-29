@@ -11,6 +11,10 @@ namespace SoundScenesOpenAL_Library.Models
 
     public class Source
     {
+        public Source()
+        {
+        }
+
         public string Name { get; set; }
         public string SoundFilePath { get; set; }
         public Vector3 StartPosition { get; set; } // [x, y, z]
@@ -22,6 +26,18 @@ namespace SoundScenesOpenAL_Library.Models
         public float Pitch { get; set; } = 1.0f; // Wysokość dźwięku 1.0 = normalna wysokość 
 
 
-        public bool Loop { get; set; } = false; 
+        public bool Loop { get; set; } = false;
+
+        public Source(string name, string soundFilePath, Vector3 startPosition, Vector3 velocity, List<MovementPoint> path, float gain, float pitch, bool loop)
+        {
+            Name = name;
+            SoundFilePath = soundFilePath;
+            StartPosition = startPosition;
+            Velocity = velocity;
+            Path = path;
+            Gain = gain;
+            Pitch = pitch;
+            Loop = loop;
+        }
     }
 }

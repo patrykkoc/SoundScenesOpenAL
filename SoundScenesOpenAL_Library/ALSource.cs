@@ -7,6 +7,11 @@ namespace SoundScenesOpenAL_Library
 {
     public class ALSource : Source, IDisposable
     {
+        public ALSource(Source src)
+       : base(src.Name,src.SoundFilePath,src.StartPosition,src.Velocity,src.Path,src.Gain, src.Pitch,src.Loop)   
+        {
+            LoadBuffer();
+        }
         public int BufferId { get; private set; }
         public int SourceId { get; private set; }
         public double StartTime { get; set; } // czas w sekundach, kiedy odpaliæ
@@ -15,12 +20,18 @@ namespace SoundScenesOpenAL_Library
         {
             int channels, bits, rate;
             byte[] data = SoundLoader.LoadSOundFromFile(SoundFilePath, out channels, out bits, out rate);
+            Console.WriteLine($"Loaded {data.Length} bytes from {SoundFilePath} (channels: {channels}, bits: {bits}, rate: {rate})");
+            Console.WriteLine($"WAV header: channels={channels}, bits={bits}, rate={rate}");
+
             BufferId = AL.GenBuffer();
             ALFormat format = (channels == 1)
                 ? (bits == 8 ? ALFormat.Mono8 : ALFormat.Mono16)
                 : (bits == 8 ? ALFormat.Stereo8 : ALFormat.Stereo16);
 
             AL.BufferData(BufferId, format, ref data[0], data.Length, rate);
+            var error = AL.GetError();
+            if (error != ALError.NoError)
+                Console.WriteLine($"OpenAL error after BufferData: {error}");
 
             SourceId = AL.GenSource();
             AL.Source(SourceId, ALSourcei.Buffer, BufferId);

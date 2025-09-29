@@ -14,34 +14,52 @@ namespace SoundScenesOpenAL_Library.Audio
 
         public static byte[] LoadSound(Stream stream, out int channels, out int bits, out int rate)
         {
-            byte[] data;
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 string signature = new string(reader.ReadChars(4));
-                
                 if (signature != "RIFF")
                     throw new Exception("Invalid WAV file");
 
-                int riff_chunck_size = reader.ReadInt32();
+                reader.ReadInt32(); // riff chunk size
 
                 string format = new string(reader.ReadChars(4));
                 if (format != "WAVE")
                     throw new Exception("Invalid WAV file");
 
-                string subchunk1_id = new string(reader.ReadChars(4));
-                int subchunk1_size = reader.ReadInt32();
-                channels = reader.ReadInt16();
-                rate = reader.ReadInt32();
-                int byte_rate = reader.ReadInt32();
-                int block_align = reader.ReadInt16();
-                bits = reader.ReadInt16();
-
-                string subchunk2_id = new string(reader.ReadChars(4));
-                int subchunk2_size = reader.ReadInt32();
-                data = reader.ReadBytes(subchunk2_size);
+                // Szukaj chunków
+                channels = bits = rate = 0;
+                byte[]? data = null;
+                while (reader.BaseStream.Position < reader.BaseStream.Length)
+                {
+                    string chunkId = new string(reader.ReadChars(4));
+                    int chunkSize = reader.ReadInt32();
+                    if (chunkId == "fmt ")
+                    {
+                        int audioFormat = reader.ReadInt16();
+                        channels = reader.ReadInt16();
+                        rate = reader.ReadInt32();
+                        reader.ReadInt32(); // byte rate
+                        reader.ReadInt16(); // block align
+                        bits = reader.ReadInt16();
+                        if (chunkSize > 16)
+                            reader.ReadBytes(chunkSize - 16);
+                        if (audioFormat != 1)
+                            throw new NotSupportedException("Only PCM WAV files are supported.");
+                    }
+                    else if (chunkId == "data")
+                    {
+                        data = reader.ReadBytes(chunkSize);
+                        break;
+                    }
+                    else
+                    {
+                        reader.ReadBytes(chunkSize);
+                    }
+                }
+                if (data == null)
+                    throw new Exception("No data chunk found in WAV file.");
+                return data;
             }
-
-            return data;
         }
     }
 }
