@@ -8,7 +8,7 @@ namespace SoundScenesOpenAL_Console
         public static void Main(string[] args)
         {
             // Uruchomienie testu sceny (zapis/odczyt JSON)
-           // SceneCreateTest.CreateTestScene();
+              SceneCreateTest.CreateTestScene();
              
             // Odtwarzanie sceny wczytanej z pliku JSON przez ScenePlayer
             var scene = new Scene();
