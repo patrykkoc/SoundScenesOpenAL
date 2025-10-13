@@ -10,32 +10,52 @@ namespace SoundScenesOpenAL_Console
         {
             Scene scene = new Scene { Name = "TestScene" };
 
-            var carPath = new List<MovementPoint>
+            // Car in front: right to left, in front of listener
+            // Samochód przód z prawej do lewej 
+            var carFrontPath = new List<MovementPoint>
             {
-                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, 0.0f), Velocity = new Vector3(2.0f, 0.0f, 0.0f) },
-                new MovementPoint { Position = new Vector3(-10.0f, 0.0f, 0.0f), Velocity = new Vector3(2.0f, 0.0f, 0.0f) },
-                new MovementPoint { Position = new Vector3(0.0f, 0.0f, 0.0f),   Velocity = new Vector3(2.0f, 0.0f, 0.0f) },
-                new MovementPoint { Position = new Vector3(10.0f, 0.0f, 0.0f),  Velocity = new Vector3(2.0f, 0.0f, 0.0f) },
-                new MovementPoint { Position = new Vector3(20.0f, 0.0f, 0.0f),  Velocity = new Vector3(0.0f, 0.0f, 0.0f) }
+                new MovementPoint { Position = new Vector3(20.0f, 0.0f, -10.0f), Velocity = new Vector3(-4.0f, 0.0f, 0.0f), TimeStart = 0f, TimeEnd = 3f },
+                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, -10.0f), Velocity = new Vector3(0.0f, 0.0f, 0.0f), TimeStart = 3f, TimeEnd = 6f }
             };
 
             scene.AddSource(new Source
             {
-                Name = "CarSound",
-                SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
-                StartPosition = carPath[0].Position,
-                Velocity = carPath[0].Velocity,
-                Path = carPath,
-                Gain = 1.0f,
-                Loop = false
+                Name = "CarFront",
+              //  SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
+                 SoundFilePath = "Resources/sound2.wav",
+                Path = carFrontPath,
+                Gain = 5.0f,
+                Loop = true
             });
 
+            // Samochód z tyłu z lewej do prawej 
+            var carBackPath = new List<MovementPoint>
+            {
+                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, 5.0f), Velocity = new Vector3(4.0f, 0.0f, 0.0f), TimeStart = 3f, TimeEnd = 6f },
+                new MovementPoint { Position = new Vector3(20.0f, 0.0f, 5.0f), Velocity = new Vector3(0.0f, 0.0f, 0.0f), TimeStart = 6f, TimeEnd = 9f }
+            };
+
+            scene.AddSource(new Source
+            {
+                Name = "CarBack",
+                SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav", 
+
+                //SoundFilePath = "Resources/sound2.wav", 
+                Path = carBackPath,
+                Gain = 2.0f,
+                Loop = true
+            });
+
+            // Train station in front
+            var trainPath = new List<MovementPoint>
+            {
+                new MovementPoint { Position = new Vector3(0.0f, 0.0f, -20.0f), Velocity = Vector3.Zero, TimeStart = 0f, TimeEnd = 50f }
+            };
             scene.AddSource(new Source
             {
                 Name = "TrainAnnouncement",
                 SoundFilePath = "Resources/dzwiekiMono/pociagzapowiedz-Siedlce.wav",
-                StartPosition = new Vector3(20.0f, 0.0f, 0.0f),
-                Velocity = Vector3.Zero,
+                Path = trainPath,
                 Gain = 1.0f,
                 Loop = true
             });
@@ -56,7 +76,7 @@ namespace SoundScenesOpenAL_Console
             Console.WriteLine($"Listener position: {loadedScene.Listener.Position}");
             foreach (var src in loadedScene.Sources)
             {
-                Console.WriteLine($"Source: {src.Name}, File: {src.SoundFilePath}, Position: {src.StartPosition}, Gain: {src.Gain}, Pitch: {src.Pitch}, Loop: {src.Loop}");
+                Console.WriteLine($"Source: {src.Name}, File: {src.SoundFilePath}, Position: {src.GetStartPosition}, Gain: {src.Gain}, Pitch: {src.Pitch}, Loop: {src.Loop}");
                 if (src.Path != null && src.Path.Count > 0)
                 {
                     Console.WriteLine("  Path:");

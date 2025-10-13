@@ -9,8 +9,8 @@ namespace SoundScenesOpenAL_Library
     {
 
         //: base(src.Name,src.SoundFilePath,src.StartPosition,src.Velocity,src.Path,src.Gain, src.Pitch,src.Loop)   
-        public ALSource(Source src)
-        : base(src.Name,src.SoundFilePath,src.Path,src.Gain, src.Pitch,src.Loop)   
+        public ALSource(Source src) 
+        :base(src.Name,src.SoundFilePath,src.Path,src.Gain, src.Pitch,src.Loop)   
         {
             LoadBuffer();
         }
@@ -37,15 +37,15 @@ namespace SoundScenesOpenAL_Library
 
             SourceId = AL.GenSource();
             AL.Source(SourceId, ALSourcei.Buffer, BufferId);
-            AL.Source(SourceId, ALSource3f.Position, StartPosition.X, StartPosition.Y, StartPosition.Z);
-            AL.Source(SourceId, ALSource3f.Velocity, Velocity.X, Velocity.Y, Velocity.Z);
+            AL.Source(SourceId, ALSource3f.Position, GetStartPosition().X, GetStartPosition().Y, GetStartPosition().Z);
+            AL.Source(SourceId, ALSource3f.Velocity, GetStartVelocity().X, GetStartVelocity().Y, GetStartVelocity().Z);
             AL.Source(SourceId, ALSourcef.Gain, Gain);
             AL.Source(SourceId, ALSourcef.Pitch, Pitch);
             AL.Source(SourceId, ALSourceb.Looping, Loop);
         }
 
         public void Play() => AL.SourcePlay(SourceId);
-        public void Stop() => AL.SourceStop(SourceId);
+        public void Stop() => AL.SourceStop(SourceId);  
 
         public void Dispose()
         {

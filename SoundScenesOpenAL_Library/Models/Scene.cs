@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +13,17 @@ namespace SoundScenesOpenAL_Library.Models
         public List<Source> Sources { get; set; } = new();
         public Listener Listener { get; set; } = new();
         public string Name { get; set; } = "DefaultScene";
+        public float Duration
+        {
+            get
+            {
+                return Sources
+                    .SelectMany(s => s.Path)
+                    .Select(p => p.TimeEnd)
+                    .DefaultIfEmpty(0f)
+                    .Max();
+            }
+        }
 
         public void AddSource(Source source) => Sources.Add(source);
         public void RemoveSource(Source source) => Sources.Remove(source);
