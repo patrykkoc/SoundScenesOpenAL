@@ -7,14 +7,16 @@ namespace SoundScenesOpenAL_Library
 {
     public class ALSource : Source, IDisposable
     {
+
+        //: base(src.Name,src.SoundFilePath,src.StartPosition,src.Velocity,src.Path,src.Gain, src.Pitch,src.Loop)   
         public ALSource(Source src)
-       : base(src.Name,src.SoundFilePath,src.StartPosition,src.Velocity,src.Path,src.Gain, src.Pitch,src.Loop)   
+        : base(src.Name,src.SoundFilePath,src.Path,src.Gain, src.Pitch,src.Loop)   
         {
             LoadBuffer();
         }
         public int BufferId { get; private set; }
         public int SourceId { get; private set; }
-        public double StartTime { get; set; } // czas w sekundach, kiedy odpaliæ
+      //  public double StartTime { get; set; } // czas w sekundach, kiedy odpaliæ
 
         public void LoadBuffer()
         {

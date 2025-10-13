@@ -17,8 +17,8 @@ namespace SoundScenesOpenAL_Library.Models
 
         public string Name { get; set; }
         public string SoundFilePath { get; set; }
-        public Vector3 StartPosition { get; set; } // [x, y, z]
-        public Vector3 Velocity { get; set; } // [x, y, z]
+     //   public Vector3 StartPosition { get; set; } // [x, y, z]
+     //   public Vector3 Velocity { get; set; } // [x, y, z]
         public List<MovementPoint> Path { get; set; } = new(); // lista punktów z prędkościami
  
         public float Gain { get; set; } = 1.0f; // Głośność źródła dźwięku 1.0 = 100%
@@ -28,16 +28,20 @@ namespace SoundScenesOpenAL_Library.Models
 
         public bool Loop { get; set; } = false;
 
-        public Source(string name, string soundFilePath, Vector3 startPosition, Vector3 velocity, List<MovementPoint> path, float gain, float pitch, bool loop)
+       // public Source(string name, string soundFilePath, Vector3 startPosition, Vector3 velocity, List<MovementPoint> path, float gain, float pitch, bool loop)
+        public Source(string name, string soundFilePath,   List<MovementPoint> path, float gain, float pitch, bool loop)
         {
             Name = name;
             SoundFilePath = soundFilePath;
-            StartPosition = startPosition;
-            Velocity = velocity;
+         //   StartPosition = startPosition;
+          //  Velocity = velocity;
             Path = path;
             Gain = gain;
             Pitch = pitch;
             Loop = loop;
         }
+
+        public Vector3 GetStartPosition() => Path != null && Path.Count > 0 ? Path[0].Position : Vector3.Zero;
+        public Vector3 GetStartVelocity() => Path != null && Path.Count > 0 ? Path[0].Velocity : Vector3.Zero;
     }
 }
