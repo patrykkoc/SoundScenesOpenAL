@@ -31,20 +31,20 @@ namespace SoundScenesOpenAL_Library
             {
                 var alSource = new ALSource(src);
                 _alSources.Add(alSource);
-                alSource.Stop();
+              
             }
 
             float currentTime = 0f;
 
             while (currentTime <= _scene.Duration)
             {
-                for (int i = 0; i < _scene.Sources.Count; i++)
+                for (int i = 0; i < _alSources.Count; i++)
                 {
-                    var src = _scene.Sources[i];
+                    
                     var alSource = _alSources[i];
 
-                    // Find the current segment (between two MovementPoints)
-                    var path = src.Path;
+                    // Znajdź aktualny segment ruchu (pomiędzy dwoma MovementPoint)
+                    var path = alSource.Path;
                     if (path == null || path.Count == 0)
                     {
                         alSource.Stop();
