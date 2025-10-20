@@ -11,11 +11,10 @@ namespace SoundScenesOpenAL_Console
             Scene scene = new Scene { Name = "TestScene" };
 
             // Car in front: right to left, in front of listener
-            // Samochód przód z prawej do lewej 
             var carFrontPath = new List<MovementPoint>
             {
-                new MovementPoint { Position = new Vector3(20.0f, 0.0f, -10.0f), Velocity = new Vector3(-4.0f, 0.0f, 0.0f), TimeStart = 0f, TimeEnd = 3f },
-                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, -10.0f), Velocity = new Vector3(0.0f, 0.0f, 0.0f), TimeStart = 3f, TimeEnd = 6f }
+                new MovementPoint { Position = new Vector3(20.0f, 0.0f, -10.0f), TimeStart = 0f, TimeEnd = 3f },
+                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, -10.0f), TimeStart = 3f, TimeEnd = 6f }
             };
 
             scene.AddSource(new Source
@@ -31,8 +30,8 @@ namespace SoundScenesOpenAL_Console
             // Samochód z tyłu z lewej do prawej 
             var carBackPath = new List<MovementPoint>
             {
-                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, 5.0f), Velocity = new Vector3(4.0f, 0.0f, 0.0f), TimeStart = 3f, TimeEnd = 6f },
-                new MovementPoint { Position = new Vector3(20.0f, 0.0f, 5.0f), Velocity = new Vector3(0.0f, 0.0f, 0.0f), TimeStart = 6f, TimeEnd = 9f }
+                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, 5.0f),   TimeStart = 3f, TimeEnd = 6f },
+                new MovementPoint { Position = new Vector3(20.0f, 0.0f, 5.0f),  TimeStart = 6f, TimeEnd = 9f }
             };
 
             scene.AddSource(new Source
@@ -49,7 +48,7 @@ namespace SoundScenesOpenAL_Console
             // Train station in front
             var trainPath = new List<MovementPoint>
             {
-                new MovementPoint { Position = new Vector3(0.0f, 0.0f, -20.0f), Velocity = Vector3.Zero, TimeStart = 0f, TimeEnd = 50f }
+                new MovementPoint { Position = new Vector3(0.0f, 0.0f, -20.0f), TimeStart = 0f, TimeEnd = 50f }
             };
             scene.AddSource(new Source
             {
@@ -76,12 +75,12 @@ namespace SoundScenesOpenAL_Console
             Console.WriteLine($"Listener position: {loadedScene.Listener.Position}");
             foreach (var src in loadedScene.Sources)
             {
-                Console.WriteLine($"Source: {src.Name}, File: {src.SoundFilePath}, Position: {src.GetStartPosition}, Gain: {src.Gain}, Pitch: {src.Pitch}, Loop: {src.Loop}");
+                Console.WriteLine($"Source: {src.Name}, File: {src.SoundFilePath}, Position: {src.GetStartPosition()}, Gain: {src.Gain}, Pitch: {src.Pitch}, Loop: {src.Loop}");
                 if (src.Path != null && src.Path.Count > 0)
                 {
                     Console.WriteLine("  Path:");
                     foreach (var point in src.Path)
-                        Console.WriteLine($"Pos: {point.Position}, Vel: {point.Velocity}");
+                        Console.WriteLine($"Pos: {point.Position}");
                 }
             }
             return scene;

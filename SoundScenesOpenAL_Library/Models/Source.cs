@@ -42,6 +42,5 @@ namespace SoundScenesOpenAL_Library.Models
         }
 
         public Vector3 GetStartPosition() => Path != null && Path.Count > 0 ? Path[0].Position : Vector3.Zero;
-        public Vector3 GetStartVelocity() => Path != null && Path.Count > 0 ? Path[0].Velocity : Vector3.Zero;
-    }
+     }
 }

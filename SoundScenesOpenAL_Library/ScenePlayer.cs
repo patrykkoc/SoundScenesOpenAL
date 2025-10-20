@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading;
 
 namespace SoundScenesOpenAL_Library
 {
@@ -21,7 +22,7 @@ namespace SoundScenesOpenAL_Library
 
         public void Play(float stepSeconds = 0.05f)
         {
-            float sceneDuration = _scene.Duration; // automatycznie wyliczane na podstawie ścieżek
+            float sceneDuration = _scene.Duration;
             _device = new SoundDevice();
             ALListenerHelper.Apply(_scene.Listener);
 
@@ -30,11 +31,10 @@ namespace SoundScenesOpenAL_Library
             {
                 var alSource = new ALSource(src);
                 _alSources.Add(alSource);
-                alSource.Stop(); // źródło nie gra na starcie
+                alSource.Stop();
             }
 
             float currentTime = 0f;
-            bool running = true;
 
             while (currentTime <= _scene.Duration)
             {
@@ -43,25 +43,50 @@ namespace SoundScenesOpenAL_Library
                     var src = _scene.Sources[i];
                     var alSource = _alSources[i];
 
-                    // Znajdź aktywny MovementPoint dla aktualnego czasu
-                    var activePoint = src.Path?.FirstOrDefault(p => currentTime >= p.TimeStart && currentTime < p.TimeEnd);
-
-                    if (activePoint != null)
+                    // Find the current segment (between two MovementPoints)
+                    var path = src.Path;
+                    if (path == null || path.Count == 0)
                     {
-                        // Oblicz nową pozycję na podstawie velocity i upływu czasu
-                        float t = currentTime - activePoint.TimeStart;
-                        Vector3 newPosition = activePoint.Position + activePoint.Velocity * t;
+                        alSource.Stop();
+                        continue;
+                    }
+                    else if (path.Count == 1)
+                    {
+                        var point = path[0];
+                        alSource.SetPositionAndVelocity(point.Position, Vector3.Zero);
 
-                        AL.Source(alSource.SourceId, ALSource3f.Position, newPosition.X, newPosition.Y, newPosition.Z);
-                        AL.Source(alSource.SourceId, ALSource3f.Velocity, activePoint.Velocity.X, activePoint.Velocity.Y, activePoint.Velocity.Z);
+                        if (!IsSourcePlaying(alSource.SourceId))
+                            alSource.Play();
 
-                        // Jeśli źródło nie gra, uruchom je
+                        continue;
+                    }
+
+                    // Find the segment for currentTime
+                    int segIdx = path.FindIndex(p => currentTime >= p.TimeStart && currentTime < p.TimeEnd);
+                    if (segIdx >= 0 && segIdx < path.Count - 1)
+                    {
+                        var startPoint = path[segIdx];
+                        var endPoint = path[segIdx + 1];
+
+                        float segmentDuration = endPoint.TimeStart - startPoint.TimeStart;
+                        if (segmentDuration <= 0f)
+                        {
+                            alSource.Stop();
+                            continue;
+                        }
+
+                        // Calculate velocity for this segment
+                        Vector3 velocity = (endPoint.Position - startPoint.Position) / segmentDuration;
+                        float t = Math.Clamp(currentTime - startPoint.TimeStart, 0, segmentDuration);
+                        Vector3 newPosition = startPoint.Position + velocity * t;
+
+                        alSource.SetPositionAndVelocity(newPosition, velocity);
+
                         if (!IsSourcePlaying(alSource.SourceId))
                             alSource.Play();
                     }
                     else
                     {
-                        // Poza aktywnym segmentem zatrzymaj źródło
                         alSource.Stop();
                     }
                     Console.WriteLine("Current time: " + currentTime);

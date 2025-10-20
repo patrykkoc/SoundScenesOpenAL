@@ -38,7 +38,7 @@ namespace SoundScenesOpenAL_Library
             SourceId = AL.GenSource();
             AL.Source(SourceId, ALSourcei.Buffer, BufferId);
             AL.Source(SourceId, ALSource3f.Position, GetStartPosition().X, GetStartPosition().Y, GetStartPosition().Z);
-            AL.Source(SourceId, ALSource3f.Velocity, GetStartVelocity().X, GetStartVelocity().Y, GetStartVelocity().Z);
+            AL.Source(SourceId, ALSource3f.Velocity, 0f, 0f, 0f); // Set velocity to zero at initialization
             AL.Source(SourceId, ALSourcef.Gain, Gain);
             AL.Source(SourceId, ALSourcef.Pitch, Pitch);
             AL.Source(SourceId, ALSourceb.Looping, Loop);
@@ -46,6 +46,11 @@ namespace SoundScenesOpenAL_Library
 
         public void Play() => AL.SourcePlay(SourceId);
         public void Stop() => AL.SourceStop(SourceId);  
+        public void SetPositionAndVelocity(Vector3 position, Vector3 velocity)
+        {
+            AL.Source(SourceId, ALSource3f.Position, position.X, position.Y, position.Z);
+            AL.Source(SourceId, ALSource3f.Velocity, velocity.X, velocity.Y, velocity.Z);
+        }
 
         public void Dispose()
         {
