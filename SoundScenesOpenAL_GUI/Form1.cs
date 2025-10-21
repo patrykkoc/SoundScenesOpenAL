@@ -6,5 +6,10 @@ namespace SoundScenesOpenAL_GUI
         {
             InitializeComponent();
         }
+
+        private void otwórzToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
