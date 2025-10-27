@@ -14,14 +14,24 @@ namespace SoundScenesOpenAL_Library
         private readonly Scene _scene;
         private SoundDevice _device;
         private List<ALSource> _alSources = new();
+        private Listener _currentListener;
 
+
+        // flaga z GUI 
+        private volatile bool _stopRequested;
+
+        
         public ScenePlayer(Scene scene)
         {
             _scene = scene;
+            _currentListener = scene.Listener;
+
         }
 
         public void Play(float stepSeconds = 0.05f)
         {
+            _stopRequested = false;
+
             float sceneDuration = _scene.Duration;
             _device = new SoundDevice();
             ALListenerHelper.Apply(_scene.Listener);
@@ -38,6 +48,10 @@ namespace SoundScenesOpenAL_Library
 
             while (currentTime <= _scene.Duration)
             {
+                if (_stopRequested) break;
+
+               
+
                 for (int i = 0; i < _alSources.Count; i++)
                 {
                     
@@ -89,18 +103,20 @@ namespace SoundScenesOpenAL_Library
                     {
                         alSource.Stop();
                     }
-                    Console.WriteLine("Current time: " + currentTime);
+                   
                 }
-
+                Console.WriteLine("Current time: " + currentTime);
                 Thread.Sleep((int)(stepSeconds * 1000));
                 currentTime += stepSeconds;
             }
 
-            Console.WriteLine("Press Enter to stop...");
-            Console.ReadLine();
+      
             Dispose();
         }
-
+        public void Stop()
+        {
+            _stopRequested = true;
+        }
         private bool IsSourcePlaying(int sourceId)
         {
             int state;
