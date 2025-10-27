@@ -8,4 +8,51 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SoundScenesOpenAL_Library\SoundScenesOpenAL_Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\dzwiekiMono\kroki-kobiety-po-hali-dworca.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\pociagzapowiedz-Siedlce.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\samochod-ruszajacy-str.lewa.WAV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\samochody-szosa-str.lewa.WAV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\samochody-szosa-z-przodu.WAV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\samochody-ul-Janowska-str-prawa.WAV">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\swiatladzwiekowe-3-maja1-czerwone.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\swiatladzwiekowe-3-maja2-zmiananazielone.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\openal32.dll" TargetPath="openal32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\sound.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\dzwiekiMono\sound2.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Sceny\scene_test.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Sceny\" />
+  </ItemGroup>
+
 </Project>

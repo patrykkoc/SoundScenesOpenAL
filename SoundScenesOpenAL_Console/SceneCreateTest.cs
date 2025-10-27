@@ -21,7 +21,7 @@ namespace SoundScenesOpenAL_Console
             {
                 Name = "CarFront",
               //  SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
-                 SoundFilePath = "Resources/sound2.wav",
+                 SoundFilePath = "Resources/dzwiekiMono/sound2.wav",
                 Path = carFrontPath,
                 Gain = 5.0f,
                 Loop = true
@@ -65,7 +65,7 @@ namespace SoundScenesOpenAL_Console
                 Velocity = Vector3.Zero,
             });
 
-            string path = "scene_test.json";
+            string path = "Resources/scene_test.json";
             scene.SaveToJson(path);
             Console.WriteLine($"Scene saved to {path}");
 

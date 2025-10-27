@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundScenesOpenAL_Library", "SoundScenesOpenAL_Library\SoundScenesOpenAL_Library.csproj", "{9B7FFE90-0D8D-4811-8901-4A79EDD68373}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundScenesOpenAL_GUI", "SoundScenesOpenAL_GUI\SoundScenesOpenAL_GUI.csproj", "{888A7FA9-6507-453C-B350-6A0AE219E088}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9B7FFE90-0D8D-4811-8901-4A79EDD68373} = {9B7FFE90-0D8D-4811-8901-4A79EDD68373}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
