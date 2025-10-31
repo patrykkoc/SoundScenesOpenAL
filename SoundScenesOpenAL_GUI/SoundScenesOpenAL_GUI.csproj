@@ -52,6 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Resources\Obrazki\" />
     <Folder Include="Resources\Sceny\" />
   </ItemGroup>
 

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             menuStrip1 = new MenuStrip();
             plikToolStripMenuItem1 = new ToolStripMenuItem();
             uruchomSceneToolStripMenuItem = new ToolStripMenuItem();
@@ -98,7 +97,7 @@
             // 
             toolStripButtonStart.CheckOnClick = true;
             toolStripButtonStart.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonStart.Image = (Image)resources.GetObject("toolStripButtonStart.Image");
+            toolStripButtonStart.Image = Properties.Resources.Play;
             toolStripButtonStart.ImageTransparentColor = Color.Magenta;
             toolStripButtonStart.Name = "toolStripButtonStart";
             toolStripButtonStart.Size = new Size(23, 22);
@@ -109,7 +108,7 @@
             // 
             toolStripButtonStop.CheckOnClick = true;
             toolStripButtonStop.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonStop.Image = (Image)resources.GetObject("toolStripButtonStop.Image");
+            toolStripButtonStop.Image = Properties.Resources.Stop;
             toolStripButtonStop.ImageTransparentColor = Color.Magenta;
             toolStripButtonStop.Name = "toolStripButtonStop";
             toolStripButtonStop.Size = new Size(23, 22);
