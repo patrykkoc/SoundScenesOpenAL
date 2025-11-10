@@ -15,9 +15,8 @@ namespace SoundScenesOpenAL_GUI
             InitializeComponent();
            
              changeButtonState(toolStripButtonStart); 
-            changeButtonState(toolStripButtonStop);
-            //changeButtonState(toolStripButtonStop);
-          
+            changeButtonState(toolStripButtonStop); 
+            openDefaultScene();
         }
 
 
@@ -54,7 +53,7 @@ namespace SoundScenesOpenAL_GUI
 
         private void toolStripButtonStart_Click(object sender, EventArgs e)
         {
-            // Jeœli u¿ywasz CheckOnClick = true, mo¿esz kontrolowaæ stan przez Checked
+            
              
                 changeButtonState(toolStripButtonStart);
                 changeButtonState(toolStripButtonStop);
@@ -65,21 +64,15 @@ namespace SoundScenesOpenAL_GUI
                   
                     return;
                 }
-
-                // UI: zmieñ tekst i zablokuj elementy które nie powinny dzia³aæ podczas odtwarzania
-            
-             
-                // mo¿esz te¿ zablokowaæ opcjê wczytywania sceny:
-                // jSONToolStripMenuItem.Enabled = false;
-
-                // Stwórz player i uruchom na w¹tku t³a
+ 
+                // Stwórz player i uruchom  
                 _scenePlayer = new ScenePlayer(_scene);
-
-                Task.Run(() =>
+            
+            Task.Run(() =>
                 {
                     try
                     {
-                        _scenePlayer.Play(); // twoje Play sprawdza _stopRequested flagê
+                        _scenePlayer?.Play();  
                     }
                     catch (Exception ex)
                     {
@@ -93,12 +86,8 @@ namespace SoundScenesOpenAL_GUI
                         // Przywróæ UI na w¹tku GUI
                         BeginInvoke(() =>
                         {
-                            _scenePlayer = null;
-                         
-                           
-                            // jSONToolStripMenuItem.Enabled = true;
-                             
-
+                           // _scenePlayer = null;
+                          
                         }); 
 
                     }
@@ -128,6 +117,22 @@ namespace SoundScenesOpenAL_GUI
             {
                 button.Enabled = true;
              //   button.Checked = true;
+            }
+        }
+
+        private void openDefaultScene()
+        {
+            string defaultScenePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Sceny", "scene_test.json");
+            if (File.Exists(defaultScenePath))
+            {
+                _scene = new Scene();
+                _scene.InitializeFromJson(defaultScenePath);
+                 if (toolStripButtonStart.Enabled == false)
+                    changeButtonState(toolStripButtonStart);
+            }
+            else
+            {
+                MessageBox.Show("Nie znaleziono domyœlnej sceny.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
