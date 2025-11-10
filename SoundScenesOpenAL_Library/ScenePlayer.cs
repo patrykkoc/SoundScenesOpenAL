@@ -16,6 +16,8 @@ namespace SoundScenesOpenAL_Library
         private List<ALSource> _alSources = new();
         private Listener _currentListener;
 
+        private volatile float _currentTime;
+        public float CurrentTime => _currentTime;
 
         // flaga z GUI 
         private volatile bool _stopRequested;
@@ -25,11 +27,12 @@ namespace SoundScenesOpenAL_Library
         {
             _scene = scene;
             _currentListener = scene.Listener;
-
+            
         }
 
         public void Play(float stepSeconds = 0.05f)
         {
+            _currentTime = 0f;
             _stopRequested = false;
 
             float sceneDuration = _scene.Duration;
@@ -48,6 +51,7 @@ namespace SoundScenesOpenAL_Library
 
             while (currentTime <= _scene.Duration)
             {
+                  _currentTime = currentTime;
                 if (_stopRequested) break;
 
                
@@ -110,7 +114,8 @@ namespace SoundScenesOpenAL_Library
                 currentTime += stepSeconds;
             }
 
-      
+            _currentTime = currentTime;
+
             Dispose();
         }
         public void Stop()
