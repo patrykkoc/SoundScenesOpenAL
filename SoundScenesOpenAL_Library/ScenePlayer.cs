@@ -47,67 +47,34 @@ namespace SoundScenesOpenAL_Library
               
             }
 
+            // Czy źródło zostało już uruchomione - każde startuje raz, w chwili aktywacji
+            var started = new bool[_alSources.Count];
             float currentTime = 0f;
 
             while (currentTime <= _scene.Duration)
             {
-                  _currentTime = currentTime;
+                _currentTime = currentTime;
                 if (_stopRequested) break;
-
-               
 
                 for (int i = 0; i < _alSources.Count; i++)
                 {
-                    
                     var alSource = _alSources[i];
 
-                    // Znajdź aktualny segment ruchu (pomiędzy dwoma MovementPoint)
-                    var path = alSource.Path;
-                    if (path == null || path.Count == 0)
+                    if (PathInterpolator.TryGetState(alSource.Path, currentTime, out Vector3 position, out Vector3 velocity))
                     {
-                        alSource.Stop();
-                        continue;
-                    }
-                    else if (path.Count == 1)
-                    {
-                        var point = path[0];
-                        alSource.SetPositionAndVelocity(point.Position, Vector3.Zero);
+                        alSource.SetPositionAndVelocity(position, velocity);
 
-                        if (!IsSourcePlaying(alSource.SourceId))
-                            alSource.Play();
-
-                        continue;
-                    }
-
-                    // Find the segment for currentTime
-                    int segIdx = path.FindIndex(p => currentTime >= p.TimeStart && currentTime < p.TimeEnd);
-                    if (segIdx >= 0 && segIdx < path.Count - 1)
-                    {
-                        var startPoint = path[segIdx];
-                        var endPoint = path[segIdx + 1];
-
-                        float segmentDuration = endPoint.TimeStart - startPoint.TimeStart;
-                        if (segmentDuration <= 0f)
+                        // Loop=true zapętla się w OpenAL, Loop=false gra jednorazowo (bez restartu po zakończeniu)
+                        if (!started[i])
                         {
-                            alSource.Stop();
-                            continue;
-                        }
-
-                        // Calculate velocity for this segment
-                        Vector3 velocity = (endPoint.Position - startPoint.Position) / segmentDuration;
-                        float t = Math.Clamp(currentTime - startPoint.TimeStart, 0, segmentDuration);
-                        Vector3 newPosition = startPoint.Position + velocity * t;
-
-                        alSource.SetPositionAndVelocity(newPosition, velocity);
-
-                        if (!IsSourcePlaying(alSource.SourceId))
                             alSource.Play();
+                            started[i] = true;
+                        }
                     }
-                    else
+                    else if (started[i])
                     {
                         alSource.Stop();
                     }
-                   
                 }
                 Console.WriteLine("Current time: " + currentTime);
                 Thread.Sleep((int)(stepSeconds * 1000));
@@ -122,13 +89,6 @@ namespace SoundScenesOpenAL_Library
         {
             _stopRequested = true;
         }
-        private bool IsSourcePlaying(int sourceId)
-        {
-            int state;
-            AL.GetSource(sourceId, ALGetSourcei.SourceState, out state);
-            return (ALSourceState)state == ALSourceState.Playing;
-        }
-
         public void Dispose()
         {
             foreach (var alSource in _alSources)

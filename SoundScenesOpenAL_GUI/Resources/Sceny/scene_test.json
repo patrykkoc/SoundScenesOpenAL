@@ -10,8 +10,7 @@
             "Y": 0,
             "Z": -10
           },
-          "TimeStart": 0,
-          "TimeEnd": 3
+          "Time": 0
         },
         {
           "Position": {
@@ -19,8 +18,7 @@
             "Y": 0,
             "Z": -10
           },
-          "TimeStart": 3,
-          "TimeEnd": 6
+          "Time": 6
         }
       ],
       "Gain": 5,
@@ -37,8 +35,7 @@
             "Y": 0,
             "Z": 5
           },
-          "TimeStart": 3,
-          "TimeEnd": 6
+          "Time": 0
         },
         {
           "Position": {
@@ -46,8 +43,7 @@
             "Y": 0,
             "Z": 5
           },
-          "TimeStart": 6,
-          "TimeEnd": 9
+          "Time": 6
         }
       ],
       "Gain": 2,
@@ -64,8 +60,15 @@
             "Y": 0,
             "Z": -20
           },
-          "TimeStart": 0,
-          "TimeEnd": 50
+          "Time": 0
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": -20
+          },
+          "Time": 50
         }
       ],
       "Gain": 1,
@@ -95,6 +98,5 @@
       "Z": 0
     }
   },
-  "Name": "TestScene",
-  "Duration": 50
+  "Name": "TestScene"
 }

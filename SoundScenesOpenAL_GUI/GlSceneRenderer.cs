@@ -50,8 +50,8 @@ namespace SoundScenesOpenAL_GUI
             foreach (var src in scene.Sources)
             {
                 DrawPath(src);
-                var p = InterpolatePosition(src, currentTime);
-                DrawSourcePoint(p, currentTime, src);
+                bool active = PathInterpolator.TryGetState(src.Path, currentTime, out var p, out _);
+                DrawSourcePoint(p, active);
             }
         }
 
@@ -87,35 +87,13 @@ namespace SoundScenesOpenAL_GUI
             if (src.Path == null || src.Path.Count == 0) return;
             GL.Begin(PrimitiveType.LineStrip);
             GL.Color3(0.9f, 0.7f, 0.3f);
-            foreach (var mp in src.Path.OrderBy(x => x.TimeStart))
+            foreach (var mp in src.Path)
                 GL.Vertex3(mp.Position.X, mp.Position.Y, mp.Position.Z);
             GL.End();
         }
 
-        private ModelVector3 InterpolatePosition(Source src, float time)
+        private void DrawSourcePoint(ModelVector3 p, bool active)
         {
-            if (src.Path == null || src.Path.Count == 0)
-                return src.GetStartPosition();
-            if (src.Path.Count == 1)
-                return src.Path[0].Position;
-
-            int segIdx = src.Path.FindIndex(p => time >= p.TimeStart && time < p.TimeEnd);
-            if (segIdx >= 0 && segIdx < src.Path.Count - 1)
-            {
-                var a = src.Path[segIdx];
-                var b = src.Path[segIdx + 1];
-                float dur = b.TimeStart - a.TimeStart;
-                if (dur <= 0f) return b.Position;
-                float t = Math.Clamp(time - a.TimeStart, 0, dur);
-                var vel = (b.Position - a.Position) / dur;
-                return a.Position + vel * t;
-            }
-            return src.Path.OrderBy(p => p.TimeEnd).Last().Position;
-        }
-
-        private void DrawSourcePoint(ModelVector3 p, float time, Source src)
-        {
-            bool active = time <= (src.Path?.Max(m => m.TimeEnd) ?? 0f);
             GL.PointSize(8f);
             GL.Begin(PrimitiveType.Points);
             if (active) GL.Color3(1f, 0.5f, 0.2f); else GL.Color3(0.5f, 0.5f, 0.5f);
