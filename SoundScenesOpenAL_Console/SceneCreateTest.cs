@@ -21,7 +21,8 @@ namespace SoundScenesOpenAL_Console
             {
                 Name = "CarFront",
               // SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
-                  SoundFilePath = "Resources/sound2.wav",
+                 // SoundFilePath = "Resources/sound2.wav",
+                       SoundFilePath = "Resources/force.wav",
                 Path = carFrontPath,
                 Gain = 5.0f,
                 Loop = true
@@ -39,7 +40,8 @@ namespace SoundScenesOpenAL_Console
                 Name = "CarBack",
               //  SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav", 
 
-                SoundFilePath = "Resources/sound2.wav", 
+              //  SoundFilePath = "Resources/sound2.wav", 
+                  SoundFilePath = "Resources/alerted.wav", 
                 Path = carBackPath,
                 Gain = 2.0f,
                 Loop = true
