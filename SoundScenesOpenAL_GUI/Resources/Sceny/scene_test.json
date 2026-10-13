@@ -21,7 +21,7 @@
           "Time": 6
         }
       ],
-      "Gain": 5,
+      "Gain": 1,
       "Pitch": 1,
       "Loop": true
     },
@@ -46,7 +46,7 @@
           "Time": 6
         }
       ],
-      "Gain": 2,
+      "Gain": 1,
       "Pitch": 1,
       "Loop": true
     },

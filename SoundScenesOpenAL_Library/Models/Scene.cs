@@ -56,11 +56,15 @@ namespace SoundScenesOpenAL_Library.Models
             return scene;
         }
 
-        // Sprawdza, czy każde źródło ma ścieżkę z nieujemnymi, niemalejącymi czasami
+        // Sprawdza, czy każde źródło ma głośność 0..1 i ścieżkę z nieujemnymi, niemalejącymi czasami
         public void Validate()
         {
             foreach (var source in Sources)
             {
+                // OpenAL obcina wynikową głośność do AL_MAX_GAIN (domyślnie 1), więc Gain > 1 działałby tylko z daleka
+                if (source.Gain < 0f || source.Gain > 1f)
+                    throw new InvalidDataException($"Źródło '{source.Name}': Gain {source.Gain} musi być w zakresie 0..1.");
+
                 if (source.Path == null || source.Path.Count == 0)
                     throw new InvalidDataException($"Źródło '{source.Name}' nie ma żadnego punktu ruchu.");
 

@@ -24,7 +24,7 @@ namespace SoundScenesOpenAL_Console
                  // SoundFilePath = "Resources/sound2.wav",
                        SoundFilePath = "Resources/force.wav",
                 Path = carFrontPath,
-                Gain = 5.0f,
+                Gain = 1.0f,
                 Loop = true
             });
 
@@ -43,7 +43,7 @@ namespace SoundScenesOpenAL_Console
               //  SoundFilePath = "Resources/sound2.wav", 
                   SoundFilePath = "Resources/alerted.wav", 
                 Path = carBackPath,
-                Gain = 2.0f,
+                Gain = 1.0f,
                 Loop = true
             });
 
