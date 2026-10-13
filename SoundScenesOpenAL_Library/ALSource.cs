@@ -1,4 +1,4 @@
-using OpenTK.Audio.OpenAL;
+﻿using OpenTK.Audio.OpenAL;
 using SoundScenesOpenAL_Library.Audio;
 using SoundScenesOpenAL_Library.Models;
 using System.Numerics;
@@ -16,21 +16,18 @@ namespace SoundScenesOpenAL_Library
         }
         public int BufferId { get; private set; }
         public int SourceId { get; private set; }
-      //  public double StartTime { get; set; } // czas w sekundach, kiedy odpali�
+      //  public double StartTime { get; set; } // czas w sekundach, kiedy odpalić
 
         public void LoadBuffer()
         {
-            int channels, bits, rate;
-            byte[] data = SoundLoader.LoadSOundFromFile(SoundFilePath, out channels, out bits, out rate);
-            Console.WriteLine($"Loaded {data.Length} bytes from {SoundFilePath} (channels: {channels}, bits: {bits}, rate: {rate})");
-            Console.WriteLine($"WAV header: channels={channels}, bits={bits}, rate={rate}");
+            // SoundLoader zawsze zwraca mono 16-bit, niezależnie od formatu pliku
+            byte[] data = SoundLoader.LoadMono16FromFile(SoundFilePath, out int rate, out var originalFormat);
+            Console.WriteLine($"Loaded {data.Length} bytes from {SoundFilePath} (original: {originalFormat}, played as: 16 bit mono, rate: {rate})");
+            if (data.Length == 0)
+                throw new InvalidDataException($"Plik {SoundFilePath} nie zawiera próbek dźwięku.");
 
             BufferId = AL.GenBuffer();
-            ALFormat format = (channels == 1)
-                ? (bits == 8 ? ALFormat.Mono8 : ALFormat.Mono16)
-                : (bits == 8 ? ALFormat.Stereo8 : ALFormat.Stereo16);
-
-            AL.BufferData(BufferId, format, ref data[0], data.Length, rate);
+            AL.BufferData(BufferId, ALFormat.Mono16, ref data[0], data.Length, rate);
             var error = AL.GetError();
             if (error != ALError.NoError)
                 Console.WriteLine($"OpenAL error after BufferData: {error}");
@@ -59,4 +56,4 @@ namespace SoundScenesOpenAL_Library
             AL.DeleteBuffer(BufferId);
         }
     }
-}
+}
