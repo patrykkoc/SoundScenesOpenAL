@@ -12,7 +12,7 @@ namespace SoundScenesOpenAL_Console
              
             // Odtwarzanie sceny wczytanej z pliku JSON przez ScenePlayer
             var scene = new Scene();
-            scene.InitializeFromJson("scene_test.json");
+            scene.InitializeFromJson("Resources/scene_test.json");
             var player = new ScenePlayer(scene);
             player.Play();
         }

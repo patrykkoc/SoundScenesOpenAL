@@ -3,6 +3,7 @@ using SoundScenesOpenAL_Library.Audio;
 using SoundScenesOpenAL_Library.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
@@ -11,9 +12,18 @@ namespace SoundScenesOpenAL_Library
 {
     public class ScenePlayer
     {
+        // Kontekst OpenAL jest wspólny dla całego procesu, więc naraz gra tylko jeden player.
+        // Nowe Play() czeka, aż poprzednie odtwarzanie zwolni źródła i urządzenie (szybkie Stop→Start w GUI).
+        private static readonly object PlaybackLock = new();
+
         private readonly Scene _scene;
-        private SoundDevice _device;
-        private List<ALSource> _alSources = new();
+
+        private volatile float _currentTime;
+        public float CurrentTime => _currentTime;
+
+        // flaga z GUI
+        private volatile bool _stopRequested;
+
 
         public ScenePlayer(Scene scene)
         {
@@ -22,101 +32,100 @@ namespace SoundScenesOpenAL_Library
 
         public void Play(float stepSeconds = 0.05f)
         {
-            float sceneDuration = _scene.Duration;
-            _device = new SoundDevice();
-            ALListenerHelper.Apply(_scene.Listener);
+            _currentTime = 0f;
 
-            // Utworzenie ALSource dla każdego Source
-            foreach (var src in _scene.Sources)
+            lock (PlaybackLock)
             {
-                var alSource = new ALSource(src);
-                _alSources.Add(alSource);
-              
-            }
-
-            float currentTime = 0f;
-
-            while (currentTime <= _scene.Duration)
-            {
-                for (int i = 0; i < _alSources.Count; i++)
+                try
                 {
-                    
-                    var alSource = _alSources[i];
+                    // Stop() wywołane w trakcie czekania na poprzednie odtwarzanie - nie startujemy
+                    if (!_stopRequested)
+                        PlayLocked(stepSeconds);
+                }
+                finally
+                {
+                    // Reset na końcu, a nie na początku - Stop() przed startem nie może zginąć
+                    _stopRequested = false;
+                }
+            }
+        }
 
-                    // Znajdź aktualny segment ruchu (pomiędzy dwoma MovementPoint)
-                    var path = alSource.Path;
-                    if (path == null || path.Count == 0)
+        private void PlayLocked(float stepSeconds)
+        {
+            float sceneDuration = _scene.Duration;
+            var alSources = new List<ALSource>();
+
+            // using + finally: źródła i urządzenie są zwalniane także po wyjątku (np. brak pliku WAV)
+            using var device = new SoundDevice();
+            try
+            {
+                // Model odległości: głośność maleje odwrotnie proporcjonalnie do odległości (domyślny model OpenAL).
+                // Ustawiony jawnie, żeby zachowanie sceny nie zależało od domyślnych ustawień implementacji.
+                AL.DistanceModel(ALDistanceModel.InverseDistanceClamped);
+
+                ALListenerHelper.Apply(_scene.Listener);
+
+                // Utworzenie ALSource dla każdego Source
+                foreach (var src in _scene.Sources)
+                    alSources.Add(new ALSource(src));
+
+                // Czy źródło zostało już uruchomione - każde startuje raz, w chwili aktywacji
+                var started = new bool[alSources.Count];
+                var toStart = new List<int>();
+
+                // Czas sceny z zegara, a nie z sumy Sleep() - Sleep na Windows trwa dłużej niż zadano
+                var clock = Stopwatch.StartNew();
+
+                while (!_stopRequested)
+                {
+                    float currentTime = (float)clock.Elapsed.TotalSeconds;
+                    if (currentTime > sceneDuration)
                     {
-                        alSource.Stop();
-                        continue;
+                        _currentTime = sceneDuration;
+                        break;
                     }
-                    else if (path.Count == 1)
+                    _currentTime = currentTime;
+
+                    toStart.Clear();
+                    for (int i = 0; i < alSources.Count; i++)
                     {
-                        var point = path[0];
-                        alSource.SetPositionAndVelocity(point.Position, Vector3.Zero);
+                        var alSource = alSources[i];
 
-                        if (!IsSourcePlaying(alSource.SourceId))
-                            alSource.Play();
+                        if (PathInterpolator.TryGetState(alSource.Path, currentTime, out Vector3 position, out Vector3 velocity))
+                        {
+                            alSource.SetPositionAndVelocity(position, velocity);
 
-                        continue;
-                    }
-
-                    // Find the segment for currentTime
-                    int segIdx = path.FindIndex(p => currentTime >= p.TimeStart && currentTime < p.TimeEnd);
-                    if (segIdx >= 0 && segIdx < path.Count - 1)
-                    {
-                        var startPoint = path[segIdx];
-                        var endPoint = path[segIdx + 1];
-
-                        float segmentDuration = endPoint.TimeStart - startPoint.TimeStart;
-                        if (segmentDuration <= 0f)
+                            // Loop=true zapętla się w OpenAL, Loop=false gra jednorazowo (bez restartu po zakończeniu)
+                            if (!started[i])
+                            {
+                                toStart.Add(alSource.SourceId);
+                                started[i] = true;
+                            }
+                        }
+                        else if (started[i])
                         {
                             alSource.Stop();
-                            continue;
                         }
-
-                        // Calculate velocity for this segment
-                        Vector3 velocity = (endPoint.Position - startPoint.Position) / segmentDuration;
-                        float t = Math.Clamp(currentTime - startPoint.TimeStart, 0, segmentDuration);
-                        Vector3 newPosition = startPoint.Position + velocity * t;
-
-                        alSource.SetPositionAndVelocity(newPosition, velocity);
-
-                        if (!IsSourcePlaying(alSource.SourceId))
-                            alSource.Play();
                     }
-                    else
-                    {
-                        alSource.Stop();
-                    }
+
+                    // Źródła aktywowane w tym kroku startują jednym wywołaniem - w tym samym cyklu miksera
+                    if (toStart.Count > 0)
+                        AL.SourcePlay(toStart.Count, toStart.ToArray());
+
                     Console.WriteLine("Current time: " + currentTime);
+                    Thread.Sleep((int)(stepSeconds * 1000));
                 }
-
-                Thread.Sleep((int)(stepSeconds * 1000));
-                currentTime += stepSeconds;
             }
-
-            Console.WriteLine("Press Enter to stop...");
-            Console.ReadLine();
-            Dispose();
-        }
-
-        private bool IsSourcePlaying(int sourceId)
-        {
-            int state;
-            AL.GetSource(sourceId, ALGetSourcei.SourceState, out state);
-            return (ALSourceState)state == ALSourceState.Playing;
-        }
-
-        public void Dispose()
-        {
-            foreach (var alSource in _alSources)
+            finally
             {
-                alSource.Dispose();
+                foreach (var alSource in alSources)
+                    alSource.Dispose();
             }
-            _alSources.Clear();
+        }
 
-            _device?.Dispose();
+        public void Stop()
+        {
+            _stopRequested = true;
         }
     }
 }

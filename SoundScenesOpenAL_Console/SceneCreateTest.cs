@@ -10,45 +10,48 @@ namespace SoundScenesOpenAL_Console
         {
             Scene scene = new Scene { Name = "TestScene" };
 
-            // Car in front: right to left, in front of listener
+            // Car in front: right to left, in front of listener (0 s -> 6 s)
             var carFrontPath = new List<MovementPoint>
             {
-                new MovementPoint { Position = new Vector3(20.0f, 0.0f, -10.0f), TimeStart = 0f, TimeEnd = 3f },
-                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, -10.0f), TimeStart = 3f, TimeEnd = 6f }
+                new MovementPoint { Position = new Vector3(20.0f, 0.0f, -10.0f), Time = 0f },
+                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, -10.0f), Time = 6f }
             };
 
             scene.AddSource(new Source
             {
                 Name = "CarFront",
-              //  SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
-                 SoundFilePath = "Resources/sound2.wav",
+              // SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
+                 // SoundFilePath = "Resources/sound2.wav",
+                       SoundFilePath = "Resources/force.wav",
                 Path = carFrontPath,
-                Gain = 5.0f,
+                Gain = 1.0f,
                 Loop = true
             });
 
-            // Samochód z tyłu z lewej do prawej 
+           // Samochód z tyłu z lewej do prawej, równocześnie z CarFront (0 s -> 6 s)
             var carBackPath = new List<MovementPoint>
             {
-                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, 5.0f),   TimeStart = 3f, TimeEnd = 6f },
-                new MovementPoint { Position = new Vector3(20.0f, 0.0f, 5.0f),  TimeStart = 6f, TimeEnd = 9f }
+                new MovementPoint { Position = new Vector3(-20.0f, 0.0f, 5.0f), Time = 0f },
+                new MovementPoint { Position = new Vector3(20.0f, 0.0f, 5.0f), Time = 6f }
             };
 
             scene.AddSource(new Source
             {
                 Name = "CarBack",
-                SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav", 
+              //  SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav", 
 
-                //SoundFilePath = "Resources/sound2.wav", 
+              //  SoundFilePath = "Resources/sound2.wav", 
+                  SoundFilePath = "Resources/alerted.wav", 
                 Path = carBackPath,
-                Gain = 2.0f,
+                Gain = 1.0f,
                 Loop = true
             });
 
-            // Train station in front
+            // Train station in front - stoi w miejscu od 0 s do 50 s (dwa punkty z tą samą pozycją)
             var trainPath = new List<MovementPoint>
             {
-                new MovementPoint { Position = new Vector3(0.0f, 0.0f, -20.0f), TimeStart = 0f, TimeEnd = 50f }
+                new MovementPoint { Position = new Vector3(0.0f, 0.0f, -20.0f), Time = 0f },
+                new MovementPoint { Position = new Vector3(0.0f, 0.0f, -20.0f), Time = 50f }
             };
             scene.AddSource(new Source
             {
@@ -65,7 +68,7 @@ namespace SoundScenesOpenAL_Console
                 Velocity = Vector3.Zero,
             });
 
-            string path = "scene_test.json";
+            string path = "Resources/scene_test.json";
             scene.SaveToJson(path);
             Console.WriteLine($"Scene saved to {path}");
 

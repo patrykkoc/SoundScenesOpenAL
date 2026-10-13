@@ -1,0 +1,102 @@
+{
+  "Sources": [
+    {
+      "Name": "CarFront",
+      "SoundFilePath": "Resources/dzwiekiMono/sound2.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 20,
+            "Y": 0,
+            "Z": -10
+          },
+          "Time": 0
+        },
+        {
+          "Position": {
+            "X": -20,
+            "Y": 0,
+            "Z": -10
+          },
+          "Time": 6
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "CarBack",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -20,
+            "Y": 0,
+            "Z": 5
+          },
+          "Time": 0
+        },
+        {
+          "Position": {
+            "X": 20,
+            "Y": 0,
+            "Z": 5
+          },
+          "Time": 6
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "TrainAnnouncement",
+      "SoundFilePath": "Resources/dzwiekiMono/pociagzapowiedz-Siedlce.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": -20
+          },
+          "Time": 0
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": -20
+          },
+          "Time": 50
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    }
+  ],
+  "Listener": {
+    "Position": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "OrientationForward": {
+      "X": 0,
+      "Y": 0,
+      "Z": -1
+    },
+    "OrientationUp": {
+      "X": 0,
+      "Y": 1,
+      "Z": 0
+    },
+    "Velocity": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    }
+  },
+  "Name": "TestScene"
+}
