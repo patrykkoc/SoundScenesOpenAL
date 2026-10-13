@@ -59,6 +59,10 @@ namespace SoundScenesOpenAL_Library
             using var device = new SoundDevice();
             try
             {
+                // Model odległości: głośność maleje odwrotnie proporcjonalnie do odległości (domyślny model OpenAL).
+                // Ustawiony jawnie, żeby zachowanie sceny nie zależało od domyślnych ustawień implementacji.
+                AL.DistanceModel(ALDistanceModel.InverseDistanceClamped);
+
                 ALListenerHelper.Apply(_scene.Listener);
 
                 // Utworzenie ALSource dla każdego Source
