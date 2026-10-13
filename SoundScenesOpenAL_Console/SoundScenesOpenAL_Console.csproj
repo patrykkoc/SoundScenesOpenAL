@@ -21,6 +21,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	<TargetPath>openal32.dll</TargetPath>
     </None>
+    <None Update="Resources\Sceny\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

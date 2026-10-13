@@ -112,7 +112,6 @@ namespace SoundScenesOpenAL_Library
                     if (toStart.Count > 0)
                         AL.SourcePlay(toStart.Count, toStart.ToArray());
 
-                    Console.WriteLine("Current time: " + currentTime);
                     Thread.Sleep((int)(stepSeconds * 1000));
                 }
             }
