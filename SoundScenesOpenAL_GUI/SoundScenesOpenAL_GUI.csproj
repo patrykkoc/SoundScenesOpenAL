@@ -17,7 +17,7 @@
     <None Update="Resources\openal32.dll" TargetPath="openal32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\Sceny\scene_test.json">
+    <None Update="Resources\Sceny\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
