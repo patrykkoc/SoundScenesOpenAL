@@ -13,6 +13,10 @@ namespace SoundScenesOpenAL_Console
 
         public static void Main(string[] args)
         {
+            // Ścieżki scen i dźwięków są względne - katalog roboczy = folder programu,
+            // żeby działało niezależnie od tego, skąd uruchomiono .exe
+            Directory.SetCurrentDirectory(AppContext.BaseDirectory);
+
             while (true)
             {
                 var scenes = FindScenes();

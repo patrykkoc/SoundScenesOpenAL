@@ -11,6 +11,12 @@ namespace SoundScenesOpenAL_GUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+
+            // Ścieżki dźwięków w scenach są względne - katalog roboczy = folder programu,
+            // żeby działało niezależnie od tego, skąd uruchomiono .exe
+            Directory.SetCurrentDirectory(AppContext.BaseDirectory);
+
+
             Application.Run(new MainForm());
         }
     }
