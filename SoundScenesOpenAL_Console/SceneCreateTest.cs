@@ -20,9 +20,7 @@ namespace SoundScenesOpenAL_Console
             scene.AddSource(new Source
             {
                 Name = "CarFront",
-              // SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
-                 // SoundFilePath = "Resources/sound2.wav",
-                       SoundFilePath = "Resources/force.wav",
+                SoundFilePath = "Resources/dzwiekiMono/sound2.wav",
                 Path = carFrontPath,
                 Gain = 1.0f,
                 Loop = true
@@ -38,10 +36,7 @@ namespace SoundScenesOpenAL_Console
             scene.AddSource(new Source
             {
                 Name = "CarBack",
-              //  SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav", 
-
-              //  SoundFilePath = "Resources/sound2.wav", 
-                  SoundFilePath = "Resources/alerted.wav", 
+                SoundFilePath = "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
                 Path = carBackPath,
                 Gain = 1.0f,
                 Loop = true
