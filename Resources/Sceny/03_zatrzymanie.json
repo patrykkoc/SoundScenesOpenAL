@@ -2,7 +2,7 @@
   "Sources": [
     {
       "Name": "Samochód",
-      "SoundFilePath": "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.WAV",
+      "SoundFilePath": "Resources/dzwiekiMono/sound.wav",
       "Path": [
         {
           "Position": {
