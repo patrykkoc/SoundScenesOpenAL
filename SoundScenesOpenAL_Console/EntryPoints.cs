@@ -7,7 +7,6 @@ namespace SoundScenesOpenAL_Console
     {
         // Ścieżki względem katalogu roboczego (katalog wyjściowy programu)
         private const string ScenesDirectory = "Resources/Sceny";
-        private const string TestScenePath = "Resources/scene_test.json";
 
         // Pozycja menu: plik sceny i opis wyświetlany użytkownikowi
         private record SceneEntry(string Path, string Label);
@@ -17,13 +16,11 @@ namespace SoundScenesOpenAL_Console
             while (true)
             {
                 var scenes = FindScenes();
-                int testOption = scenes.Count + 1;
 
                 Console.WriteLine();
                 Console.WriteLine("=== SoundScenesOpenAL - demo ===");
                 for (int i = 0; i < scenes.Count; i++)
                     Console.WriteLine($"{i + 1}. {scenes[i].Label}");
-                Console.WriteLine($"{testOption}. Scena testowa z kodu (SceneCreateTest)");
                 Console.WriteLine("0. Wyjście");
                 Console.Write("Wybierz scenę: ");
 
@@ -32,7 +29,7 @@ namespace SoundScenesOpenAL_Console
                 if (input == null || input.Trim() == "0")
                     return;
 
-                if (!int.TryParse(input, out int choice) || choice < 1 || choice > testOption)
+                if (!int.TryParse(input, out int choice) || choice < 1 || choice > scenes.Count)
                 {
                     Console.WriteLine("Nieprawidłowy wybór.");
                     continue;
@@ -40,18 +37,7 @@ namespace SoundScenesOpenAL_Console
 
                 try
                 {
-                    Scene scene;
-                    if (choice == testOption)
-                    {
-                        // Zapis sceny testowej do JSON i ponowny odczyt (dotychczasowe działanie konsoli)
-                        SceneCreateTest.CreateTestScene();
-                        scene = Scene.LoadFromJson(TestScenePath);
-                    }
-                    else
-                    {
-                        scene = Scene.LoadFromJson(scenes[choice - 1].Path);
-                    }
-
+                    var scene = Scene.LoadFromJson(scenes[choice - 1].Path);
                     PlayWithProgress(scene);
                 }
                 catch (Exception ex)
