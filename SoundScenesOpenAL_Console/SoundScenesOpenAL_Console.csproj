@@ -8,22 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SoundScenesOpenAL_Library\SoundScenesOpenAL_Library.csproj" />
   </ItemGroup>
 
+  <!-- Wspólne zasoby z ..\Resources; Link zachowuje układ Resources\... w katalogu wyjściowym -->
   <ItemGroup>
-    <None Update="Resources\**\*.wav" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="Resources\openal32.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	<TargetPath>openal32.dll</TargetPath>
-    </None>
-    <None Update="Resources\Sceny\*.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="..\Resources\**\*.wav" Link="Resources\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\Resources\Sceny\*.json" Link="Resources\Sceny\%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    <None Include="..\Resources\openal32.dll" Link="openal32.dll" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 </Project>
