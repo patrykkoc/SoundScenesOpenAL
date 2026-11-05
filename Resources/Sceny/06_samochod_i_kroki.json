@@ -2,7 +2,7 @@
   "Sources": [
     {
       "Name": "Samochód z tyłu do przodu po lewej",
-      "SoundFilePath": "Resources/dzwiekiMono/sound.wav",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
       "Path": [
         {
           "Position": {

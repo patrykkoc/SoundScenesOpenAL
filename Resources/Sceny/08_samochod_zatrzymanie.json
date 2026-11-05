@@ -2,7 +2,7 @@
   "Sources": [
     {
       "Name": "Samochód po lewej: podjazd, postój, odjazd",
-      "SoundFilePath": "Resources/dzwiekiMono/sound.wav",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
       "Path": [
         {
           "Position": {

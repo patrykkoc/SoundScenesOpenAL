@@ -27,7 +27,7 @@
     },
     {
       "Name": "Samochód przed słuchaczem z lewej na prawą",
-      "SoundFilePath": "Resources/dzwiekiMono/sound.wav",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
       "Path": [
         {
           "Position": {
