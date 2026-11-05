@@ -1,0 +1,93 @@
+{
+  "Sources": [
+    {
+      "Name": "Samochód po lewej: podjazd, postój, odjazd",
+      "SoundFilePath": "Resources/dzwiekiMono/sound.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": -30
+          },
+          "Time": 0
+        },
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 4
+        },
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 9
+        },
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": 30
+          },
+          "Time": 13
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Kroki z tyłu do przodu po prawej",
+      "SoundFilePath": "Resources/dzwiekiMono/kroki-kobiety-po-hali-dworca.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 1.5,
+            "Y": 0,
+            "Z": 7
+          },
+          "Time": 3
+        },
+        {
+          "Position": {
+            "X": 1.5,
+            "Y": 0,
+            "Z": -7
+          },
+          "Time": 13
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    }
+  ],
+  "Listener": {
+    "Position": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "OrientationForward": {
+      "X": 0,
+      "Y": 0,
+      "Z": -1
+    },
+    "OrientationUp": {
+      "X": 0,
+      "Y": 1,
+      "Z": 0
+    },
+    "Velocity": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    }
+  },
+  "Name": "Samochód z postojem i kroki"
+}

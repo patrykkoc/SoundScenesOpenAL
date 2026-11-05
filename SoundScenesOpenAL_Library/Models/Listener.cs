@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SoundScenesOpenAL_Library.Models
 {
+    // Układ osi opisany w MovementPoint: +X prawo, +Y góra, +Z tył; domyślnie słuchacz patrzy w -Z (przód).
     public class Listener
     {
         public Vector3 Position { get; set; } = new(0, 0, 0);

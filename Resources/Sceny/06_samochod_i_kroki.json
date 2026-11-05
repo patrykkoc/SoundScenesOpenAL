@@ -1,0 +1,77 @@
+{
+  "Sources": [
+    {
+      "Name": "Samochód z tyłu do przodu po lewej",
+      "SoundFilePath": "Resources/dzwiekiMono/sound.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": 20
+          },
+          "Time": 2
+        },
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": -20
+          },
+          "Time": 7
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Kroki z przodu do tyłu po prawej",
+      "SoundFilePath": "Resources/dzwiekiMono/kroki-kobiety-po-hali-dworca.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 1.5,
+            "Y": 0,
+            "Z": -7
+          },
+          "Time": 0
+        },
+        {
+          "Position": {
+            "X": 1.5,
+            "Y": 0,
+            "Z": 7
+          },
+          "Time": 10
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    }
+  ],
+  "Listener": {
+    "Position": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "OrientationForward": {
+      "X": 0,
+      "Y": 0,
+      "Z": -1
+    },
+    "OrientationUp": {
+      "X": 0,
+      "Y": 1,
+      "Z": 0
+    },
+    "Velocity": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    }
+  },
+  "Name": "Samochód i kroki"
+}
