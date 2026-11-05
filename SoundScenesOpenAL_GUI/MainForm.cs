@@ -13,9 +13,10 @@ namespace SoundScenesOpenAL_GUI
         public MainForm()
         {
             InitializeComponent();
-           
-             changeButtonState(toolStripButtonStart); 
-            changeButtonState(toolStripButtonStop); 
+
+            // Start dostï¿½pny dopiero po wczytaniu sceny
+            toolStripButtonStart.Enabled = false;
+            toolStripButtonStop.Enabled = false;
             openDefaultScene();
         }
 
@@ -32,17 +33,17 @@ namespace SoundScenesOpenAL_GUI
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                // Wczytaj scenê z pliku
+                // Wczytanie nowej sceny zatrzymuje odtwarzanie poprzedniej
+                _scenePlayer?.Stop();
+
+                // Wczytaj scenï¿½ z pliku
                 _scene = new Scene();
                 _scene.InitializeFromJson(openFileDialog.FileName);
 
 
-                // MessageBox.Show($"Wczytano scenê: {_scene.Name}", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // MessageBox.Show($"Wczytano scenï¿½: {_scene.Name}", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                if(toolStripButtonStart.Enabled ==false)
-                    changeButtonState(toolStripButtonStart);
-               
-                 
+                setPlaybackButtons(isPlaying: false);
             }
         }
 
@@ -53,71 +54,56 @@ namespace SoundScenesOpenAL_GUI
 
         private void toolStripButtonStart_Click(object sender, EventArgs e)
         {
-            
-             
-                changeButtonState(toolStripButtonStart);
-                changeButtonState(toolStripButtonStop);
-                // Request to START playback
-                if (_scene == null)
-                {
-                    MessageBox.Show("Brak wczytanej sceny. U¿yj Wczytaj najpierw.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                  
-                    return;
-                }
- 
-                // Stwórz player i uruchom  
-                _scenePlayer = new ScenePlayer(_scene);
-            
-            Task.Run(() =>
-                {
-                    try
-                    {
-                        _scenePlayer?.Play();  
-                    }
-                    catch (Exception ex)
-                    {
-                        BeginInvoke(() =>
-                        {
-                            MessageBox.Show($"B³¹d odtwarzania sceny: {ex.Message}", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        });
-                    }
-                    finally
-                    {
-                        // Przywróæ UI na w¹tku GUI
-                        BeginInvoke(() =>
-                        {
-                           // _scenePlayer = null;
-                          
-                        }); 
-
-                    }
-                });
+            // Request to START playback
+            if (_scene == null)
+            {
+                MessageBox.Show("Brak wczytanej sceny. Uï¿½yj Wczytaj najpierw.", "Bï¿½ï¿½d", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-      
+
+            // Stwï¿½rz player i uruchom
+            var player = new ScenePlayer(_scene);
+            _scenePlayer = player;
+            setPlaybackButtons(isPlaying: true);
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    player.Play();
+                }
+                catch (Exception ex)
+                {
+                    BeginInvoke(() =>
+                    {
+                        MessageBox.Show($"Bï¿½ï¿½d odtwarzania sceny: {ex.Message}", "Bï¿½ï¿½d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    });
+                }
+                finally
+                {
+                    // Przywrï¿½ï¿½ UI na wï¿½tku GUI po koï¿½cu sceny (takï¿½e naturalnym, bez Stop).
+                    // Tylko bieï¿½ï¿½cy player - stary, zakoï¿½czony po szybkim Stop->Start, nie moï¿½e nadpisaï¿½ przyciskï¿½w nowego.
+                    BeginInvoke(() =>
+                    {
+                        if (_scenePlayer == player)
+                            setPlaybackButtons(isPlaying: false);
+                    });
+                }
+            });
+        }
+
 
         private void toolStripButtonStop_Click(object sender, EventArgs e)
         {
             _scenePlayer?.Stop();
-
-
-            changeButtonState(toolStripButtonStart);
-            changeButtonState(toolStripButtonStop);
-
+            setPlaybackButtons(isPlaying: false);
         }
 
-        private void changeButtonState(ToolStripButton button)
+        // Scena gra: Start wyï¿½ï¿½czony, Stop wï¿½ï¿½czony; nie gra: odwrotnie
+        private void setPlaybackButtons(bool isPlaying)
         {
-            if (button.Enabled)
-            {
-                button.Enabled = false;
-              //  button.Checked = false;
-
-            }
-            else
-            {
-                button.Enabled = true;
-             //   button.Checked = true;
-            }
+            toolStripButtonStart.Enabled = !isPlaying;
+            toolStripButtonStop.Enabled = isPlaying;
         }
 
         private void openDefaultScene()
@@ -127,12 +113,11 @@ namespace SoundScenesOpenAL_GUI
             {
                 _scene = new Scene();
                 _scene.InitializeFromJson(defaultScenePath);
-                 if (toolStripButtonStart.Enabled == false)
-                    changeButtonState(toolStripButtonStart);
+                setPlaybackButtons(isPlaying: false);
             }
             else
             {
-                MessageBox.Show("Nie znaleziono domyœlnej sceny.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nie znaleziono domyÅ›lnej sceny.", "Bï¿½ï¿½d", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
