@@ -1,0 +1,327 @@
+{
+  "Sources": [
+    {
+      "Name": "Kroki z lewej 1 m",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -1,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 0
+        },
+        {
+          "Position": {
+            "X": -1,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 4
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Kroki z prawej 1 m",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 5
+        },
+        {
+          "Position": {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 9
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Kroki z lewej 2 m",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -2,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 10
+        },
+        {
+          "Position": {
+            "X": -2,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 14
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Kroki z prawej 2 m",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 15
+        },
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 19
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Kroki z lewej 3 m",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 20
+        },
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 24
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Kroki z prawej 3 m",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 25
+        },
+        {
+          "Position": {
+            "X": 3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 29
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z lewej 1 m",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -1,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 30
+        },
+        {
+          "Position": {
+            "X": -1,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 34
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z prawej 1 m",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 35
+        },
+        {
+          "Position": {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 39
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z lewej 2 m",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -2,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 40
+        },
+        {
+          "Position": {
+            "X": -2,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 44
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z prawej 2 m",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 45
+        },
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 49
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z lewej 3 m",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 50
+        },
+        {
+          "Position": {
+            "X": -3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 54
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z prawej 3 m",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 55
+        },
+        {
+          "Position": {
+            "X": 3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 59
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    }
+  ],
+  "Listener": {
+    "Position": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "OrientationForward": {
+      "X": 0,
+      "Y": 0,
+      "Z": -1
+    },
+    "OrientationUp": {
+      "X": 0,
+      "Y": 1,
+      "Z": 0
+    },
+    "Velocity": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    }
+  },
+  "Name": "Lewo i prawo z 1, 2 i 3 m"
+}

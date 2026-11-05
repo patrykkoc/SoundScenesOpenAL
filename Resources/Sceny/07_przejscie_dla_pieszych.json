@@ -52,11 +52,11 @@
     },
     {
       "Name": "Kroki za słuchaczem z prawej na lewą",
-      "SoundFilePath": "Resources/dzwiekiMono/kroki-kobiety-po-hali-dworca.wav",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
       "Path": [
         {
           "Position": {
-            "X": 6,
+            "X": 4,
             "Y": 0,
             "Z": 2
           },
@@ -64,11 +64,11 @@
         },
         {
           "Position": {
-            "X": -6,
+            "X": -4,
             "Y": 0,
             "Z": 2
           },
-          "Time": 16.57
+          "Time": 13.7
         }
       ],
       "Gain": 1,

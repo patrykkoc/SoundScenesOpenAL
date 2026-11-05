@@ -43,23 +43,23 @@
     },
     {
       "Name": "Kroki z tyłu do przodu po prawej",
-      "SoundFilePath": "Resources/dzwiekiMono/kroki-kobiety-po-hali-dworca.wav",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
       "Path": [
         {
           "Position": {
             "X": 1.5,
             "Y": 0,
-            "Z": 7
+            "Z": 4
           },
-          "Time": 3
+          "Time": 3.7
         },
         {
           "Position": {
             "X": 1.5,
             "Y": 0,
-            "Z": -7
+            "Z": -4
           },
-          "Time": 13
+          "Time": 9.4
         }
       ],
       "Gain": 1,

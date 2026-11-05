@@ -1,0 +1,252 @@
+{
+  "Sources": [
+    {
+      "Name": "Samochód z przodu do tyłu, po lewej",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -2,
+            "Y": 0,
+            "Z": -8
+          },
+          "Time": 0
+        },
+        {
+          "Position": {
+            "X": -2,
+            "Y": 0,
+            "Z": 8
+          },
+          "Time": 2
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z przodu do tyłu, przez słuchacza",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": -8
+          },
+          "Time": 3
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 8
+          },
+          "Time": 5
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z przodu do tyłu, po prawej",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": -8
+          },
+          "Time": 6
+        },
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 8
+          },
+          "Time": 8
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z tyłu do przodu, po lewej",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -2,
+            "Y": 0,
+            "Z": 8
+          },
+          "Time": 9
+        },
+        {
+          "Position": {
+            "X": -2,
+            "Y": 0,
+            "Z": -8
+          },
+          "Time": 11
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z tyłu do przodu, przez słuchacza",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 8
+          },
+          "Time": 12
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": -8
+          },
+          "Time": 14
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z tyłu do przodu, po prawej",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 8
+          },
+          "Time": 15
+        },
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": -8
+          },
+          "Time": 17
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z lewej do prawej, przed słuchaczem",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -8,
+            "Y": 0,
+            "Z": -2
+          },
+          "Time": 18
+        },
+        {
+          "Position": {
+            "X": 8,
+            "Y": 0,
+            "Z": -2
+          },
+          "Time": 20
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z lewej do prawej, przez słuchacza",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -8,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 21
+        },
+        {
+          "Position": {
+            "X": 8,
+            "Y": 0,
+            "Z": 0
+          },
+          "Time": 23
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z lewej do prawej, za słuchaczem",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": -8,
+            "Y": 0,
+            "Z": 2
+          },
+          "Time": 24
+        },
+        {
+          "Position": {
+            "X": 8,
+            "Y": 0,
+            "Z": 2
+          },
+          "Time": 26
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    }
+  ],
+  "Listener": {
+    "Position": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "OrientationForward": {
+      "X": 0,
+      "Y": 0,
+      "Z": -1
+    },
+    "OrientationUp": {
+      "X": 0,
+      "Y": 1,
+      "Z": 0
+    },
+    "Velocity": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    }
+  },
+  "Name": "Kierunki przejazdu samochodu"
+}
