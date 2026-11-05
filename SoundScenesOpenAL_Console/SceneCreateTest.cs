@@ -42,11 +42,13 @@ namespace SoundScenesOpenAL_Console
                 Loop = true
             });
 
-            // Train station in front - stoi w miejscu od 0 s do 50 s (dwa punkty z tą samą pozycją)
+            // Train station in front - stoi w miejscu przez całą zapowiedź, jednorazowo (dwa punkty z tą samą pozycją).
+            // 20.26 s = długość pociagzapowiedz-Siedlce.wav (1 944 960 B danych / (48 000 Hz * 2 B na próbkę mono 16-bit));
+            // scena kończy się razem z zapowiedzią.
             var trainPath = new List<MovementPoint>
             {
                 new MovementPoint { Position = new Vector3(0.0f, 0.0f, -20.0f), Time = 0f },
-                new MovementPoint { Position = new Vector3(0.0f, 0.0f, -20.0f), Time = 50f }
+                new MovementPoint { Position = new Vector3(0.0f, 0.0f, -20.0f), Time = 20.26f }
             };
             scene.AddSource(new Source
             {
@@ -54,7 +56,7 @@ namespace SoundScenesOpenAL_Console
                 SoundFilePath = "Resources/dzwiekiMono/pociagzapowiedz-Siedlce.wav",
                 Path = trainPath,
                 Gain = 1.0f,
-                Loop = true
+                Loop = false
             });
 
             scene.SetListener(new Listener

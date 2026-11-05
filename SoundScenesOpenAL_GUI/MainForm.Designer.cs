@@ -31,6 +31,7 @@
             menuStrip1 = new MenuStrip();
             plikToolStripMenuItem1 = new ToolStripMenuItem();
             uruchomSceneToolStripMenuItem = new ToolStripMenuItem();
+            zatrzymajSceneToolStripMenuItem = new ToolStripMenuItem();
             otwórzToolStripMenuItem1 = new ToolStripMenuItem();
             jSONToolStripMenuItem = new ToolStripMenuItem();
             zamknijToolStripMenuItem1 = new ToolStripMenuItem();
@@ -52,7 +53,7 @@
             // 
             // plikToolStripMenuItem1
             // 
-            plikToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { uruchomSceneToolStripMenuItem, otwórzToolStripMenuItem1, zamknijToolStripMenuItem1 });
+            plikToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { uruchomSceneToolStripMenuItem, zatrzymajSceneToolStripMenuItem, otwórzToolStripMenuItem1, zamknijToolStripMenuItem1 });
             plikToolStripMenuItem1.Name = "plikToolStripMenuItem1";
             plikToolStripMenuItem1.Size = new Size(38, 20);
             plikToolStripMenuItem1.Text = "Plik";
@@ -60,10 +61,19 @@
             // uruchomSceneToolStripMenuItem
             // 
             uruchomSceneToolStripMenuItem.Name = "uruchomSceneToolStripMenuItem";
-            uruchomSceneToolStripMenuItem.Size = new Size(124, 22);
+            uruchomSceneToolStripMenuItem.ShortcutKeys = Keys.F5;
+            uruchomSceneToolStripMenuItem.Size = new Size(180, 22);
             uruchomSceneToolStripMenuItem.Text = "Uruchom";
             uruchomSceneToolStripMenuItem.Click += uruchomSceneToolStripMenuItem_Click;
-            // 
+            //
+            // zatrzymajSceneToolStripMenuItem
+            //
+            zatrzymajSceneToolStripMenuItem.Name = "zatrzymajSceneToolStripMenuItem";
+            zatrzymajSceneToolStripMenuItem.ShortcutKeys = Keys.Shift | Keys.F5;
+            zatrzymajSceneToolStripMenuItem.Size = new Size(180, 22);
+            zatrzymajSceneToolStripMenuItem.Text = "Zatrzymaj";
+            zatrzymajSceneToolStripMenuItem.Click += zatrzymajSceneToolStripMenuItem_Click;
+            //
             // otwórzToolStripMenuItem1
             // 
             otwórzToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { jSONToolStripMenuItem });
@@ -138,6 +148,7 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem plikToolStripMenuItem1;
         private ToolStripMenuItem uruchomSceneToolStripMenuItem;
+        private ToolStripMenuItem zatrzymajSceneToolStripMenuItem;
         private ToolStripMenuItem otwórzToolStripMenuItem1;
         private ToolStripMenuItem jSONToolStripMenuItem;
         private ToolStripMenuItem zamknijToolStripMenuItem1;

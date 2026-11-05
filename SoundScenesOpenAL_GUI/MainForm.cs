@@ -17,6 +17,8 @@ namespace SoundScenesOpenAL_GUI
             // Start dostępny dopiero po wczytaniu sceny
             toolStripButtonStart.Enabled = false;
             toolStripButtonStop.Enabled = false;
+            uruchomSceneToolStripMenuItem.Enabled = false;
+            zatrzymajSceneToolStripMenuItem.Enabled = false;
             openDefaultScene();
         }
 
@@ -50,6 +52,11 @@ namespace SoundScenesOpenAL_GUI
         private void uruchomSceneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toolStripButtonStart.PerformClick();
+        }
+
+        private void zatrzymajSceneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripButtonStop.PerformClick();
         }
 
         private void toolStripButtonStart_Click(object sender, EventArgs e)
@@ -99,11 +106,14 @@ namespace SoundScenesOpenAL_GUI
             setPlaybackButtons(isPlaying: false);
         }
 
-        // Scena gra: Start wyłączony, Stop włączony; nie gra: odwrotnie
+        // Scena gra: Start wyłączony, Stop włączony; nie gra: odwrotnie.
+        // Menu ma zawsze ten sam stan co pasek - nieaktywne pozycje są wyszarzone, nie ukryte.
         private void setPlaybackButtons(bool isPlaying)
         {
             toolStripButtonStart.Enabled = !isPlaying;
             toolStripButtonStop.Enabled = isPlaying;
+            uruchomSceneToolStripMenuItem.Enabled = !isPlaying;
+            zatrzymajSceneToolStripMenuItem.Enabled = isPlaying;
         }
 
         private void openDefaultScene()

@@ -68,12 +68,12 @@
             "Y": 0,
             "Z": -20
           },
-          "Time": 50
+          "Time": 20.26
         }
       ],
       "Gain": 1,
       "Pitch": 1,
-      "Loop": true
+      "Loop": false
     }
   ],
   "Listener": {
