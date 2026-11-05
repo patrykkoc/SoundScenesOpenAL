@@ -1,4 +1,4 @@
-using SoundScenesOpenAL_Library;
+﻿using SoundScenesOpenAL_Library;
 using SoundScenesOpenAL_Library.Models;
 using System.Xml.Serialization;
 
@@ -14,7 +14,7 @@ namespace SoundScenesOpenAL_GUI
         {
             InitializeComponent();
 
-            // Start dost�pny dopiero po wczytaniu sceny
+            // Start dostępny dopiero po wczytaniu sceny
             toolStripButtonStart.Enabled = false;
             toolStripButtonStop.Enabled = false;
             openDefaultScene();
@@ -36,12 +36,12 @@ namespace SoundScenesOpenAL_GUI
                 // Wczytanie nowej sceny zatrzymuje odtwarzanie poprzedniej
                 _scenePlayer?.Stop();
 
-                // Wczytaj scen� z pliku
+                // Wczytaj scenę z pliku
                 _scene = new Scene();
                 _scene.InitializeFromJson(openFileDialog.FileName);
 
 
-                // MessageBox.Show($"Wczytano scen�: {_scene.Name}", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // MessageBox.Show($"Wczytano scenę: {_scene.Name}", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 setPlaybackButtons(isPlaying: false);
             }
@@ -57,11 +57,11 @@ namespace SoundScenesOpenAL_GUI
             // Request to START playback
             if (_scene == null)
             {
-                MessageBox.Show("Brak wczytanej sceny. U�yj Wczytaj najpierw.", "B��d", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Brak wczytanej sceny. Użyj Wczytaj najpierw.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Stw�rz player i uruchom
+            // Stwórz player i uruchom
             var player = new ScenePlayer(_scene);
             _scenePlayer = player;
             setPlaybackButtons(isPlaying: true);
@@ -76,13 +76,13 @@ namespace SoundScenesOpenAL_GUI
                 {
                     BeginInvoke(() =>
                     {
-                        MessageBox.Show($"B��d odtwarzania sceny: {ex.Message}", "B��d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Błąd odtwarzania sceny: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     });
                 }
                 finally
                 {
-                    // Przywr�� UI na w�tku GUI po ko�cu sceny (tak�e naturalnym, bez Stop).
-                    // Tylko bie��cy player - stary, zako�czony po szybkim Stop->Start, nie mo�e nadpisa� przycisk�w nowego.
+                    // Przywróć UI na wątku GUI po końcu sceny (także naturalnym, bez Stop).
+                    // Tylko bieżący player - stary, zakończony po szybkim Stop->Start, nie może nadpisać przycisków nowego.
                     BeginInvoke(() =>
                     {
                         if (_scenePlayer == player)
@@ -99,7 +99,7 @@ namespace SoundScenesOpenAL_GUI
             setPlaybackButtons(isPlaying: false);
         }
 
-        // Scena gra: Start wy��czony, Stop w��czony; nie gra: odwrotnie
+        // Scena gra: Start wyłączony, Stop włączony; nie gra: odwrotnie
         private void setPlaybackButtons(bool isPlaying)
         {
             toolStripButtonStart.Enabled = !isPlaying;
@@ -117,7 +117,7 @@ namespace SoundScenesOpenAL_GUI
             }
             else
             {
-                MessageBox.Show("Nie znaleziono domyślnej sceny.", "B��d", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nie znaleziono domyślnej sceny.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

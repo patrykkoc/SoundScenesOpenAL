@@ -1,4 +1,4 @@
-using OpenTK.Graphics.OpenGL;
+锘縰sing OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using SoundScenesOpenAL_Library.Models;
 using System.Linq;
@@ -21,11 +21,11 @@ namespace SoundScenesOpenAL_GUI
 
             var target = scene?.Listener.Position ?? ModelVector3.Zero;
 
-            // konwersja k箃體 do radian體
+            // konwersja k膮t贸w do radian贸w
             float yaw = MathHelper.DegreesToRadians(yawDeg);
             float pitch = MathHelper.DegreesToRadians(pitchDeg);
 
-            // sferycznie: obr髏 wok蟪 celu
+            // sferycznie: obr贸t wok贸艂 celu
             var camOffset = new ModelVector3(
                 distance * (float)(Math.Cos(pitch) * Math.Cos(yaw)),
                 distance * (float)(Math.Sin(pitch)),

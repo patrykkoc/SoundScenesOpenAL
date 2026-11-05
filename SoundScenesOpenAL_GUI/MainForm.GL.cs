@@ -1,4 +1,4 @@
-using OpenTK.GLControl;
+﻿using OpenTK.GLControl;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.Common;
 
@@ -40,7 +40,7 @@ namespace SoundScenesOpenAL_GUI
 
             _gl.Paint += (_, __) =>
             {
-                // w Paint przed wywo�aniem renderer
+                // w Paint przed wywołaniem renderer
                 float t = _scenePlayer?.CurrentTime ?? 0f;
                 _renderer.Render(_scene, t, _gl.ClientSize.Width, _gl.ClientSize.Height,
                                 _camYaw, _camPitch, _camDistance);
