@@ -17,6 +17,7 @@ namespace SoundScenesOpenAL_Library
         private static readonly object PlaybackLock = new();
 
         private readonly Scene _scene;
+        private readonly HrtfMode _hrtfMode;
 
         private volatile float _currentTime;
         public float CurrentTime => _currentTime;
@@ -24,15 +25,28 @@ namespace SoundScenesOpenAL_Library
         // flaga z GUI
         private volatile bool _stopRequested;
 
+        // Stan HRTF zapisywany w wątku odtwarzania, czytany z innego wątku (konsola/GUI) - stąd lock
+        private readonly object _hrtfLock = new();
+        private bool _deviceOpened;
+        private HrtfStatus? _hrtfStatus;
 
-        public ScenePlayer(Scene scene)
+        // true od chwili otwarcia urządzenia w Play(); dopiero wtedy HrtfStatus ma sens
+        public bool DeviceOpened { get { lock (_hrtfLock) return _deviceOpened; } }
+
+        // Faktyczny stan HRTF; null, gdy urządzenie nie obsługuje ALC_SOFT_HRTF
+        public HrtfStatus? HrtfStatus { get { lock (_hrtfLock) return _hrtfStatus; } }
+
+
+        public ScenePlayer(Scene scene, HrtfMode hrtfMode = HrtfMode.Default)
         {
             _scene = scene;
+            _hrtfMode = hrtfMode;
         }
 
         public void Play(float stepSeconds = 0.05f)
         {
             _currentTime = 0f;
+            SetDeviceState(opened: false, status: null);
 
             lock (PlaybackLock)
             {
@@ -56,7 +70,8 @@ namespace SoundScenesOpenAL_Library
             var alSources = new List<ALSource>();
 
             // using + finally: źródła i urządzenie są zwalniane także po wyjątku (np. brak pliku WAV)
-            using var device = new SoundDevice();
+            using var device = new SoundDevice(hrtf: _hrtfMode);
+            SetDeviceState(opened: true, status: device.HrtfStatus);
             try
             {
                 // Model odległości: głośność maleje odwrotnie proporcjonalnie do odległości (domyślny model OpenAL).
@@ -125,6 +140,15 @@ namespace SoundScenesOpenAL_Library
         public void Stop()
         {
             _stopRequested = true;
+        }
+
+        private void SetDeviceState(bool opened, HrtfStatus? status)
+        {
+            lock (_hrtfLock)
+            {
+                _deviceOpened = opened;
+                _hrtfStatus = status;
+            }
         }
     }
 }
