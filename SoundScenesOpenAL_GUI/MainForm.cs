@@ -12,6 +12,13 @@ namespace SoundScenesOpenAL_GUI
         // Czy scena gra - tylko wtedy klawisze sterują słuchaczem (ustawiane w setPlaybackButtons)
         private bool _isPlaying;
 
+        // Wątek odtwarzania - przy zamykaniu okna czekamy, aż zwolni źródła i urządzenie OpenAL
+        private Task _playTask;
+
+        // Pętla odtwarzania sprawdza Stop co 50 ms, potem zwalnia źródła i urządzenie - zwykle trwa to ułamek sekundy.
+        // Limit tylko na wypadek zawieszenia, żeby okno zawsze dało się zamknąć.
+        private static readonly TimeSpan CloseWaitLimit = TimeSpan.FromSeconds(2);
+
 
         public MainForm()
         {
@@ -23,6 +30,21 @@ namespace SoundScenesOpenAL_GUI
             uruchomSceneToolStripMenuItem.Enabled = false;
             zatrzymajSceneToolStripMenuItem.Enabled = false;
             openDefaultScene();
+
+            FormClosing += MainForm_FormClosing;
+        }
+
+        // Zamknięcie okna w trakcie odtwarzania: zatrzymaj scenę i poczekaj na sprzątanie OpenAL,
+        // zamiast zostawiać wątek odtwarzania działający po zamknięciu okna
+        private void MainForm_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            _scenePlayer?.Stop();
+            _playTask?.Wait(CloseWaitLimit);
+        }
+
+        private void zamknijToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
 
@@ -41,14 +63,22 @@ namespace SoundScenesOpenAL_GUI
                 // Wczytanie nowej sceny zatrzymuje odtwarzanie poprzedniej
                 _scenePlayer?.Stop();
 
-                // Wczytaj scenę z pliku
-                _scene = new Scene();
-                _scene.InitializeFromJson(openFileDialog.FileName);
-
+                // Błędny plik daje komunikat zamiast awarii programu; poprzednia scena zostaje wczytana.
+                // Scena przypisywana dopiero po udanym wczytaniu - błąd nie zostawia w _scene pustej sceny.
+                try
+                {
+                    _scene = Scene.LoadFromJson(openFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Nie udało się wczytać sceny:\n{ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 // MessageBox.Show($"Wczytano scenę: {_scene.Name}", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                setPlaybackButtons(isPlaying: false);
+                // Bez żadnej wczytanej sceny Start zostaje wyłączony
+                if (_scene != null)
+                    setPlaybackButtons(isPlaying: false);
             }
         }
 
@@ -76,7 +106,7 @@ namespace SoundScenesOpenAL_GUI
             _scenePlayer = player;
             setPlaybackButtons(isPlaying: true);
 
-            Task.Run(() =>
+            _playTask = Task.Run(() =>
             {
                 try
                 {
@@ -172,9 +202,16 @@ namespace SoundScenesOpenAL_GUI
             string defaultScenePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Sceny", "scene_test.json");
             if (File.Exists(defaultScenePath))
             {
-                _scene = new Scene();
-                _scene.InitializeFromJson(defaultScenePath);
-                setPlaybackButtons(isPlaying: false);
+                // Uszkodzona scena domyślna: komunikat i program działa dalej bez sceny (można wczytać inną)
+                try
+                {
+                    _scene = Scene.LoadFromJson(defaultScenePath);
+                    setPlaybackButtons(isPlaying: false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Nie udało się wczytać domyślnej sceny:\n{ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {

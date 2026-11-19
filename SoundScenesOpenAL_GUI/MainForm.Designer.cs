@@ -94,6 +94,7 @@
             zamknijToolStripMenuItem1.Name = "zamknijToolStripMenuItem1";
             zamknijToolStripMenuItem1.Size = new Size(124, 22);
             zamknijToolStripMenuItem1.Text = "Zamknij";
+            zamknijToolStripMenuItem1.Click += zamknijToolStripMenuItem1_Click;
             // 
             // toolStrip1
             // 
