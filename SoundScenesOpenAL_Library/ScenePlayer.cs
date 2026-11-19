@@ -37,10 +37,14 @@ namespace SoundScenesOpenAL_Library
         public HrtfStatus? HrtfStatus { get { lock (_hrtfLock) return _hrtfStatus; } }
 
 
+        // Pozycja i obrót słuchacza; startuje z ustawień sceny, można je zmieniać w trakcie odtwarzania
+        public ListenerControl ListenerControl { get; }
+
         public ScenePlayer(Scene scene, HrtfMode hrtfMode = HrtfMode.Default)
         {
             _scene = scene;
             _hrtfMode = hrtfMode;
+            ListenerControl = new ListenerControl(scene.Listener);
         }
 
         public void Play(float stepSeconds = 0.05f)
@@ -78,8 +82,6 @@ namespace SoundScenesOpenAL_Library
                 // Ustawiony jawnie, żeby zachowanie sceny nie zależało od domyślnych ustawień implementacji.
                 AL.DistanceModel(ALDistanceModel.InverseDistanceClamped);
 
-                ALListenerHelper.Apply(_scene.Listener);
-
                 // Utworzenie ALSource dla każdego Source
                 foreach (var src in _scene.Sources)
                     alSources.Add(new ALSource(src));
@@ -100,6 +102,9 @@ namespace SoundScenesOpenAL_Library
                         break;
                     }
                     _currentTime = currentTime;
+
+                    // Słuchacz mógł zostać przesunięty z innego wątku - ustawiany tutaj, w wątku odtwarzania, jak źródła
+                    ALListenerHelper.Apply(ListenerControl.ToListener());
 
                     toStart.Clear();
                     for (int i = 0; i < alSources.Count; i++)
