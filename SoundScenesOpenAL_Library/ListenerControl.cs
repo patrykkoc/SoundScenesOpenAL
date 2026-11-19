@@ -9,6 +9,11 @@ namespace SoundScenesOpenAL_Library
     // Obrót tylko w poziomie (wokół osi Y): kąt 0 = patrzenie w -Z (przód), kąt dodatni = obrót w prawo.
     public class ListenerControl
     {
+        // Wspólne dla konsoli i GUI: jedno wciśnięcie klawisza = jeden krok / jeden obrót.
+        // Przytrzymanie klawisza powtarza wciśnięcia (powtarzanie klawiszy w systemie), więc działa jak ciągły ruch.
+        public const float StepMetres = 0.25f;
+        public const float TurnDegrees = 15f;
+
         private readonly object _lock = new();
         private Vector3 _position;
         private float _yawDegrees;

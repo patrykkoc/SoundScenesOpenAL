@@ -15,11 +15,6 @@ namespace SoundScenesOpenAL_Console
         // Tryb HRTF dla kolejnych odtwarzań; przełączany w menu klawiszem "h"
         private static HrtfMode _hrtfMode = HrtfMode.Default;
 
-        // Sterowanie słuchaczem w trakcie odtwarzania: jedno wciśnięcie = jeden krok / jeden obrót.
-        // Przytrzymanie klawisza powtarza wciśnięcia (powtarzanie klawiszy w systemie), więc działa jak ciągły ruch.
-        private const float StepMetres = 0.25f;
-        private const float TurnDegrees = 15f;
-
         public static void Main(string[] args)
         {
             // Ścieżki scen i dźwięków są względne - katalog roboczy = folder programu,
@@ -122,23 +117,23 @@ namespace SoundScenesOpenAL_Console
                             break;
                         case ConsoleKey.W:
                         case ConsoleKey.UpArrow:
-                            listener.MoveForward(StepMetres);
+                            listener.MoveForward(ListenerControl.StepMetres);
                             break;
                         case ConsoleKey.S:
                         case ConsoleKey.DownArrow:
-                            listener.MoveForward(-StepMetres);
+                            listener.MoveForward(-ListenerControl.StepMetres);
                             break;
                         case ConsoleKey.D:
-                            listener.MoveRight(StepMetres);
+                            listener.MoveRight(ListenerControl.StepMetres);
                             break;
                         case ConsoleKey.A:
-                            listener.MoveRight(-StepMetres);
+                            listener.MoveRight(-ListenerControl.StepMetres);
                             break;
                         case ConsoleKey.RightArrow:
-                            listener.Turn(TurnDegrees);
+                            listener.Turn(ListenerControl.TurnDegrees);
                             break;
                         case ConsoleKey.LeftArrow:
-                            listener.Turn(-TurnDegrees);
+                            listener.Turn(-ListenerControl.TurnDegrees);
                             break;
                         // Pozostałe klawisze są ignorowane - przypadkowe wciśnięcie nie przerywa sceny
                     }

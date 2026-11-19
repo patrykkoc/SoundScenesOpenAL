@@ -9,6 +9,9 @@ namespace SoundScenesOpenAL_GUI
         private Scene _scene;
         private ScenePlayer _scenePlayer;
 
+        // Czy scena gra - tylko wtedy klawisze sterują słuchaczem (ustawiane w setPlaybackButtons)
+        private bool _isPlaying;
+
 
         public MainForm()
         {
@@ -110,10 +113,58 @@ namespace SoundScenesOpenAL_GUI
         // Menu ma zawsze ten sam stan co pasek - nieaktywne pozycje są wyszarzone, nie ukryte.
         private void setPlaybackButtons(bool isPlaying)
         {
+            _isPlaying = isPlaying;
             toolStripButtonStart.Enabled = !isPlaying;
             toolStripButtonStop.Enabled = isPlaying;
             uruchomSceneToolStripMenuItem.Enabled = !isPlaying;
             zatrzymajSceneToolStripMenuItem.Enabled = isPlaying;
+        }
+
+        // Sterowanie słuchaczem z klawiatury, te same klawisze co w konsoli.
+        // ProcessCmdKey, a nie KeyDown: strzałki są w WinForms klawiszami nawigacji (przenoszą fokus między
+        // kontrolkami) i nie docierają do KeyDown formularza. Tutaj formularz dostaje je przed kontrolkami.
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // Poza odtwarzaniem i przy otwartym menu klawisze działają normalnie (np. strzałki i Esc w menu)
+            if (!_isPlaying || _scenePlayer == null || isMenuOpen())
+                return base.ProcessCmdKey(ref msg, keyData);
+
+            var listener = _scenePlayer.ListenerControl;
+            // keyData zawiera też modyfikatory - np. Shift+F5 czy Ctrl+W nie pasują do żadnego przypadku
+            switch (keyData)
+            {
+                case Keys.Escape:
+                    toolStripButtonStop.PerformClick();
+                    return true;
+                case Keys.W:
+                case Keys.Up:
+                    listener.MoveForward(ListenerControl.StepMetres);
+                    return true;
+                case Keys.S:
+                case Keys.Down:
+                    listener.MoveForward(-ListenerControl.StepMetres);
+                    return true;
+                case Keys.D:
+                    listener.MoveRight(ListenerControl.StepMetres);
+                    return true;
+                case Keys.A:
+                    listener.MoveRight(-ListenerControl.StepMetres);
+                    return true;
+                case Keys.Right:
+                    listener.Turn(ListenerControl.TurnDegrees);
+                    return true;
+                case Keys.Left:
+                    listener.Turn(-ListenerControl.TurnDegrees);
+                    return true;
+                default:
+                    return base.ProcessCmdKey(ref msg, keyData);
+            }
+        }
+
+        // Czy rozwinięte jest któreś menu na pasku menu
+        private bool isMenuOpen()
+        {
+            return menuStrip1.Items.OfType<ToolStripMenuItem>().Any(item => item.DropDown.Visible);
         }
 
         private void openDefaultScene()

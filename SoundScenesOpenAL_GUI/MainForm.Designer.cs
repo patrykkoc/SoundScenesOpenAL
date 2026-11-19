@@ -84,6 +84,7 @@
             // jSONToolStripMenuItem
             // 
             jSONToolStripMenuItem.Name = "jSONToolStripMenuItem";
+            jSONToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
             jSONToolStripMenuItem.Size = new Size(102, 22);
             jSONToolStripMenuItem.Text = "JSON";
             jSONToolStripMenuItem.Click += jSONToolStripMenuItem_Click;
