@@ -1,0 +1,127 @@
+{
+  "Sources": [
+    {
+      "Name": "Silnik z przodu 1 m",
+      "SoundFilePath": "Resources/dzwiekiMono/SamochodPostoj.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": -1
+          },
+          "Time": 0
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": -1
+          },
+          "Time": 6
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Silnik z tyłu 1 m",
+      "SoundFilePath": "Resources/dzwiekiMono/SamochodPostoj.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Time": 7
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Time": 13
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Silnik z przodu 2 m",
+      "SoundFilePath": "Resources/dzwiekiMono/SamochodPostoj.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": -2
+          },
+          "Time": 14
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": -2
+          },
+          "Time": 20
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Silnik z tyłu 2 m",
+      "SoundFilePath": "Resources/dzwiekiMono/SamochodPostoj.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 2
+          },
+          "Time": 21
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 2
+          },
+          "Time": 27
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    }
+  ],
+  "Listener": {
+    "Position": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "OrientationForward": {
+      "X": 0,
+      "Y": 0,
+      "Z": -1
+    },
+    "OrientationUp": {
+      "X": 0,
+      "Y": 1,
+      "Z": 0
+    },
+    "Velocity": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    }
+  },
+  "Name": "Przód i tył - stały dźwięk silnika"
+}
