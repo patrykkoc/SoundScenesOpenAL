@@ -12,14 +12,16 @@ namespace SoundScenesOpenAL_GUI
 {
     public class GlSceneRenderer
     {
-        public void Render(Scene? scene, float currentTime, int width, int height,
+        // listener: bieżący słuchacz (w trakcie odtwarzania przesuwany klawiszami), a nie ten zapisany w scenie
+        public void Render(Scene? scene, Listener? listener, float currentTime, int width, int height,
                            float yawDeg, float pitchDeg, float distance)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             float aspect = width > 0 && height > 0 ? width / (float)height : 1f;
             var projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(60f), aspect, 0.1f, 2000f);
 
-            var target = scene?.Listener.Position ?? ModelVector3.Zero;
+            // Kamera krąży wokół słuchacza, więc podąża za nim, gdy się porusza
+            var target = listener?.Position ?? ModelVector3.Zero;
 
             // konwersja kątów do radianów
             float yaw = MathHelper.DegreesToRadians(yawDeg);
@@ -46,7 +48,8 @@ namespace SoundScenesOpenAL_GUI
             DrawAxes(15f);
             if (scene == null) return;
 
-            DrawListener(scene.Listener);
+            if (listener != null)
+                DrawListener(listener);
             foreach (var src in scene.Sources)
             {
                 DrawPath(src);

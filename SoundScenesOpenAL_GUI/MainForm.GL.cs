@@ -42,7 +42,11 @@ namespace SoundScenesOpenAL_GUI
             {
                 // w Paint przed wywołaniem renderer
                 float t = _scenePlayer?.CurrentTime ?? 0f;
-                _renderer.Render(_scene, t, _gl.ClientSize.Width, _gl.ClientSize.Height,
+                // W trakcie odtwarzania słuchacz z ListenerControl (ruch z klawiatury), poza nim pozycja startowa ze sceny
+                var listener = _isPlaying && _scenePlayer != null
+                    ? _scenePlayer.ListenerControl.ToListener()
+                    : _scene?.Listener;
+                _renderer.Render(_scene, listener, t, _gl.ClientSize.Width, _gl.ClientSize.Height,
                                 _camYaw, _camPitch, _camDistance);
                 _gl.SwapBuffers();
 
