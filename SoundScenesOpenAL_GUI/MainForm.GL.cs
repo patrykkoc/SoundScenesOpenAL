@@ -13,7 +13,8 @@ namespace SoundScenesOpenAL_GUI
         // pola kamery
         private float _camYaw = 30f;      // stopnie
         private float _camPitch = 25f;    // stopnie
-        private float _camDistance = 70f;
+        // 46 m = dawne 70 m przybliżone o dwa ząbki kółka myszy (ząbek: Delta 120 * 0.1 = 12 m, patrz MouseWheel)
+        private float _camDistance = 46f;
         private bool _dragging;
         private Point _lastMouse;
 

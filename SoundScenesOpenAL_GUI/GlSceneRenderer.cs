@@ -12,6 +12,24 @@ namespace SoundScenesOpenAL_GUI
 {
     public class GlSceneRenderer
     {
+        // Długość każdej połowy osi w metrach (od 0 do +15 i od 0 do -15)
+        private const float AxisLength = 15f;
+
+        // Wysokość litery przy końcu osi w metrach - przy domyślnej odległości kamery (70 m) dobrze widoczna
+        private const float AxisLetterSize = 1.5f;
+
+        // Ujemne połowy osi rysowane ciemniej: mnożnik jasności koloru
+        private const float NegativeAxisDim = 0.4f;
+
+        // Litery z odcinków (stary OpenGL nie ma czcionek). Współrzędne w kwadracie 0..1:
+        // u = w prawo, v = w górę; każde 4 liczby to jeden odcinek (u1, v1, u2, v2)
+        private static readonly Dictionary<char, float[]> Glyphs = new()
+        {
+            ['X'] = new[] { 0f, 0f, 1f, 1f,   0f, 1f, 1f, 0f },
+            ['Y'] = new[] { 0f, 1f, 0.5f, 0.5f,   1f, 1f, 0.5f, 0.5f,   0.5f, 0.5f, 0.5f, 0f },
+            ['Z'] = new[] { 0f, 1f, 1f, 1f,   1f, 1f, 0f, 0f,   0f, 0f, 1f, 0f },
+            ['-'] = new[] { 0f, 0.5f, 0.7f, 0.5f },
+        };
         // listener: bieżący słuchacz (w trakcie odtwarzania przesuwany klawiszami), a nie ten zapisany w scenie
         public void Render(Scene? scene, Listener? listener, float currentTime, int width, int height,
                            float yawDeg, float pitchDeg, float distance)
@@ -45,7 +63,12 @@ namespace SoundScenesOpenAL_GUI
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref view);
 
-            DrawAxes(15f);
+            // Kierunki "w prawo" i "w górę" ekranu - litery osi rysowane w tej płaszczyźnie są zawsze zwrócone do kamery
+            var camForward = ModelVector3.Normalize(target - camPos);
+            var screenRight = ModelVector3.Normalize(ModelVector3.Cross(camForward, ModelVector3.UnitY));
+            var screenUp = ModelVector3.Cross(screenRight, camForward);
+
+            DrawAxes(screenRight, screenUp);
             if (scene == null) return;
 
             if (listener != null)
@@ -58,12 +81,57 @@ namespace SoundScenesOpenAL_GUI
             }
         }
 
-        private void DrawAxes(float len)
+        // Osie OpenAL: X - prawo (czerwona), Y - góra (zielona), Z - tył (niebieska); przód słuchacza to -Z
+        private void DrawAxes(ModelVector3 screenRight, ModelVector3 screenUp)
         {
+            DrawAxis(ModelVector3.UnitX, "X", 1f, 0f, 0f, screenRight, screenUp);
+            DrawAxis(ModelVector3.UnitY, "Y", 0f, 1f, 0f, screenRight, screenUp);
+            DrawAxis(ModelVector3.UnitZ, "Z", 0f, 0.5f, 1f, screenRight, screenUp);
+        }
+
+        // Dodatnia połowa w pełnym kolorze, ujemna przyciemniona; podpisy "X" i "-X" przy końcach
+        private void DrawAxis(ModelVector3 direction, string name, float r, float g, float b,
+                              ModelVector3 screenRight, ModelVector3 screenUp)
+        {
+            var positiveEnd = direction * AxisLength;
+            var negativeEnd = -positiveEnd;
+
             GL.Begin(PrimitiveType.Lines);
-            GL.Color3(1f, 0f, 0f); GL.Vertex3(0, 0, 0); GL.Vertex3(len, 0, 0);     // X
-            GL.Color3(0f, 1f, 0f); GL.Vertex3(0, 0, 0); GL.Vertex3(0, len, 0);     // Y
-            GL.Color3(0f, 0.5f, 1f); GL.Vertex3(0, 0, 0); GL.Vertex3(0, 0, len);   // Z
+            GL.Color3(r, g, b);
+            GL.Vertex3(0, 0, 0); GL.Vertex3(positiveEnd.X, positiveEnd.Y, positiveEnd.Z);
+            GL.Color3(r * NegativeAxisDim, g * NegativeAxisDim, b * NegativeAxisDim);
+            GL.Vertex3(0, 0, 0); GL.Vertex3(negativeEnd.X, negativeEnd.Y, negativeEnd.Z);
+            GL.End();
+
+            DrawText(name, positiveEnd, r, g, b, screenRight, screenUp);
+            DrawText("-" + name, negativeEnd, r * NegativeAxisDim, g * NegativeAxisDim, b * NegativeAxisDim, screenRight, screenUp);
+        }
+
+        // Tekst z odcinków; lewy dolny róg pierwszej litery w punkcie anchor
+        private void DrawText(string text, ModelVector3 anchor, float r, float g, float b,
+                              ModelVector3 screenRight, ModelVector3 screenUp)
+        {
+            // Litera węższa niż wysoka (proporcje zwykłej czcionki), z odstępem między literami
+            float letterWidth = AxisLetterSize * 0.6f;
+            float advance = AxisLetterSize * 0.9f;
+
+            GL.Color3(r, g, b);
+            GL.Begin(PrimitiveType.Lines);
+            float offset = 0f;
+            foreach (char c in text)
+            {
+                if (Glyphs.TryGetValue(c, out var segments))
+                {
+                    for (int i = 0; i < segments.Length; i += 2)
+                    {
+                        var p = anchor
+                              + screenRight * (offset + segments[i] * letterWidth)
+                              + screenUp * (segments[i + 1] * AxisLetterSize);
+                        GL.Vertex3(p.X, p.Y, p.Z);
+                    }
+                }
+                offset += advance;
+            }
             GL.End();
         }
 
