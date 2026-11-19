@@ -15,6 +15,11 @@ namespace SoundScenesOpenAL_Console
         // Tryb HRTF dla kolejnych odtwarzań; przełączany w menu klawiszem "h"
         private static HrtfMode _hrtfMode = HrtfMode.Default;
 
+        // Sterowanie słuchaczem w trakcie odtwarzania: jedno wciśnięcie = jeden krok / jeden obrót.
+        // Przytrzymanie klawisza powtarza wciśnięcia (powtarzanie klawiszy w systemie), więc działa jak ciągły ruch.
+        private const float StepMetres = 0.25f;
+        private const float TurnDegrees = 15f;
+
         public static void Main(string[] args)
         {
             // Ścieżki scen i dźwięków są względne - katalog roboczy = folder programu,
@@ -85,7 +90,7 @@ namespace SoundScenesOpenAL_Console
             return entries;
         }
 
-        // Odtwarzanie w osobnym wątku; postęp w jednej linii, dowolny klawisz zatrzymuje scenę
+        // Odtwarzanie w osobnym wątku; postęp w jednej linii, klawisze sterują słuchaczem, Esc zatrzymuje scenę
         private static void PlayWithProgress(Scene scene)
         {
             var player = new ScenePlayer(scene, _hrtfMode);
@@ -96,22 +101,62 @@ namespace SoundScenesOpenAL_Console
                 catch (Exception ex) { playError = ex; }
             });
 
-            Console.WriteLine($"Odtwarzanie: {scene.Name}. Naciśnij dowolny klawisz, aby zatrzymać.");
+            Console.WriteLine($"Odtwarzanie: {scene.Name}.");
+            Console.WriteLine("W / strzałka w górę - krok do przodu, S / strzałka w dół - krok do tyłu, A / D - krok w bok,");
+            Console.WriteLine("strzałka w lewo / w prawo - obrót głowy, Esc - zatrzymanie.");
             playThread.Start();
 
             bool stopped = false;
+            var listener = player.ListenerControl;
             while (!playThread.Join(100))
             {
+                // while, nie if: obsłużone są wszystkie klawisze zebrane od poprzedniego sprawdzenia.
                 // KeyAvailable nie działa przy przekierowanym wejściu
-                if (!Console.IsInputRedirected && Console.KeyAvailable)
+                while (!Console.IsInputRedirected && Console.KeyAvailable)
                 {
-                    Console.ReadKey(intercept: true);
-                    player.Stop();
-                    stopped = true;
+                    switch (Console.ReadKey(intercept: true).Key)
+                    {
+                        case ConsoleKey.Escape:
+                            player.Stop();
+                            stopped = true;
+                            break;
+                        case ConsoleKey.W:
+                        case ConsoleKey.UpArrow:
+                            listener.MoveForward(StepMetres);
+                            break;
+                        case ConsoleKey.S:
+                        case ConsoleKey.DownArrow:
+                            listener.MoveForward(-StepMetres);
+                            break;
+                        case ConsoleKey.D:
+                            listener.MoveRight(StepMetres);
+                            break;
+                        case ConsoleKey.A:
+                            listener.MoveRight(-StepMetres);
+                            break;
+                        case ConsoleKey.RightArrow:
+                            listener.Turn(TurnDegrees);
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            listener.Turn(-TurnDegrees);
+                            break;
+                        // Pozostałe klawisze są ignorowane - przypadkowe wciśnięcie nie przerywa sceny
+                    }
                 }
+
                 // Faktyczny stan HRTF w linii postępu - znany dopiero po otwarciu urządzenia w wątku odtwarzania
                 string hrtf = player.DeviceOpened ? $" | HRTF: {DescribeStatus(player.HrtfStatus)}" : "";
-                Console.Write($"\rt = {player.CurrentTime,5:0.0} / {scene.Duration:0.0} s{hrtf}");
+                var position = listener.Position;
+                string pose = $" | x = {position.X,5:0.00} z = {position.Z,5:0.00} kąt = {listener.YawDegrees,4:0}°";
+                string line = $"t = {player.CurrentTime,5:0.0} / {scene.Duration:0.0} s{pose}{hrtf}";
+                if (!Console.IsOutputRedirected)
+                {
+                    // Linia dokładnie na szerokość okna (bez ostatniej kolumny): dłuższa zawinęłaby się i "\r" nie wróciłby
+                    // na jej początek, krótsza zostawiłaby końcówkę poprzedniej (np. po zmianie statusu HRTF)
+                    int width = Console.WindowWidth - 1;
+                    line = line.Length > width ? line[..width] : line.PadRight(width);
+                }
+                Console.Write("\r" + line);
             }
             Console.WriteLine();
 
