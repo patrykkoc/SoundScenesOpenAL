@@ -26,31 +26,6 @@
       "Loop": true
     },
     {
-      "Name": "Silnik z tyłu 1 m",
-      "SoundFilePath": "Resources/dzwiekiMono/SamochodPostoj.wav",
-      "Path": [
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 1
-          },
-          "Time": 7
-        },
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 1
-          },
-          "Time": 13
-        }
-      ],
-      "Gain": 1,
-      "Pitch": 1,
-      "Loop": true
-    },
-    {
       "Name": "Silnik z przodu 2 m",
       "SoundFilePath": "Resources/dzwiekiMono/SamochodPostoj.wav",
       "Path": [
@@ -60,13 +35,38 @@
             "Y": 0,
             "Z": -2
           },
-          "Time": 14
+          "Time": 7
         },
         {
           "Position": {
             "X": 0,
             "Y": 0,
             "Z": -2
+          },
+          "Time": 13
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Silnik z tyłu 1 m",
+      "SoundFilePath": "Resources/dzwiekiMono/SamochodPostoj.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Time": 14
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
           },
           "Time": 20
         }
@@ -123,5 +123,5 @@
       "Z": 0
     }
   },
-  "Name": "Przód i tył - stały dźwięk silnika"
+  "Name": "Przód 1, 2 m, potem tył 1, 2 m - stały dźwięk silnika"
 }

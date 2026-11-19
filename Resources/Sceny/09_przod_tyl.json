@@ -26,31 +26,6 @@
       "Loop": true
     },
     {
-      "Name": "Kroki z tyłu 1 m",
-      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
-      "Path": [
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 1
-          },
-          "Time": 5
-        },
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 1
-          },
-          "Time": 9
-        }
-      ],
-      "Gain": 1,
-      "Pitch": 1,
-      "Loop": true
-    },
-    {
       "Name": "Kroki z przodu 2 m",
       "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
       "Path": [
@@ -60,7 +35,7 @@
             "Y": 0,
             "Z": -2
           },
-          "Time": 10
+          "Time": 5
         },
         {
           "Position": {
@@ -68,32 +43,7 @@
             "Y": 0,
             "Z": -2
           },
-          "Time": 14
-        }
-      ],
-      "Gain": 1,
-      "Pitch": 1,
-      "Loop": true
-    },
-    {
-      "Name": "Kroki z tyłu 2 m",
-      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
-      "Path": [
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 2
-          },
-          "Time": 15
-        },
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 2
-          },
-          "Time": 19
+          "Time": 9
         }
       ],
       "Gain": 1,
@@ -110,13 +60,63 @@
             "Y": 0,
             "Z": -3
           },
-          "Time": 20
+          "Time": 10
         },
         {
           "Position": {
             "X": 0,
             "Y": 0,
             "Z": -3
+          },
+          "Time": 14
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Kroki z tyłu 1 m",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Time": 15
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Time": 19
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Kroki z tyłu 2 m",
+      "SoundFilePath": "Resources/dzwiekiMono/Kobieta-szpilki-stacja.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 2
+          },
+          "Time": 20
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 2
           },
           "Time": 24
         }
@@ -176,31 +176,6 @@
       "Loop": true
     },
     {
-      "Name": "Samochód z tyłu 1 m",
-      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
-      "Path": [
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 1
-          },
-          "Time": 35
-        },
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 1
-          },
-          "Time": 39
-        }
-      ],
-      "Gain": 1,
-      "Pitch": 1,
-      "Loop": true
-    },
-    {
       "Name": "Samochód z przodu 2 m",
       "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
       "Path": [
@@ -210,7 +185,7 @@
             "Y": 0,
             "Z": -2
           },
-          "Time": 40
+          "Time": 35
         },
         {
           "Position": {
@@ -218,32 +193,7 @@
             "Y": 0,
             "Z": -2
           },
-          "Time": 44
-        }
-      ],
-      "Gain": 1,
-      "Pitch": 1,
-      "Loop": true
-    },
-    {
-      "Name": "Samochód z tyłu 2 m",
-      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
-      "Path": [
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 2
-          },
-          "Time": 45
-        },
-        {
-          "Position": {
-            "X": 0,
-            "Y": 0,
-            "Z": 2
-          },
-          "Time": 49
+          "Time": 39
         }
       ],
       "Gain": 1,
@@ -260,13 +210,63 @@
             "Y": 0,
             "Z": -3
           },
-          "Time": 50
+          "Time": 40
         },
         {
           "Position": {
             "X": 0,
             "Y": 0,
             "Z": -3
+          },
+          "Time": 44
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z tyłu 1 m",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Time": 45
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Time": 49
+        }
+      ],
+      "Gain": 1,
+      "Pitch": 1,
+      "Loop": true
+    },
+    {
+      "Name": "Samochód z tyłu 2 m",
+      "SoundFilePath": "Resources/dzwiekiMono/samochod.wav",
+      "Path": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 2
+          },
+          "Time": 50
+        },
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 2
           },
           "Time": 54
         }
@@ -323,5 +323,5 @@
       "Z": 0
     }
   },
-  "Name": "Przód i tył z 1, 2 i 3 m"
+  "Name": "Przód 1, 2, 3 m, potem tył 1, 2, 3 m"
 }

@@ -1,7 +1,7 @@
 {
   "Sources": [
     {
-      "Name": "CarFront",
+      "Name": "Samochód z przodu, z prawej na lewą",
       "SoundFilePath": "Resources/dzwiekiMono/sound2.wav",
       "Path": [
         {
@@ -26,7 +26,7 @@
       "Loop": true
     },
     {
-      "Name": "CarBack",
+      "Name": "Samochód z tyłu, z lewej na prawą",
       "SoundFilePath": "Resources/dzwiekiMono/samochod-ruszajacy-str.lewa.wav",
       "Path": [
         {
@@ -51,7 +51,7 @@
       "Loop": true
     },
     {
-      "Name": "TrainAnnouncement",
+      "Name": "Zapowiedź pociągu z przodu",
       "SoundFilePath": "Resources/dzwiekiMono/pociagzapowiedz-Siedlce.wav",
       "Path": [
         {
@@ -98,5 +98,5 @@
       "Z": 0
     }
   },
-  "Name": "TestScene"
+  "Name": "Scena testowa"
 }
